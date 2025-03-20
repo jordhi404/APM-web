@@ -3,7 +3,7 @@
 @section('title', 'metode-bayar')
 
 @section ('content')
-    <div class="container"><div class="container" style="max-width: 400px; margin-top: 5vh; text-align: center; padding: 5px; border: 1px solid #ddd;"> 
+    <div class="container mt-4" style="max-width: 400px; margin-top: 5vh; text-align: center; padding: 5px; border: 1px solid #ddd;"> 
         <p>Pilih Metode Pembayaran</p>
         <select class="form-select" id="payment-method" name="payment-method-list">
             <option>Qris</option>
