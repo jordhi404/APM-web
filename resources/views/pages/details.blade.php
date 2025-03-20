@@ -3,7 +3,7 @@
 @section('title', 'details')
 
 @section ('content')
-    
+    <div class="container mt-4">
         <h2>Rincian Biaya</h2>
         <table class="table">
             <thead>
@@ -34,5 +34,5 @@
             </tbody>
         </table>
         <button class="btn btn-primary" onclick="window.location.href = '/metode-bayar'">Lanjut Pembayaran</button>
-    
+    </div>
 @endsection
