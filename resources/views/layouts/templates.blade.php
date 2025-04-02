@@ -5,27 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'My App')</title>
     <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="styles/style.css">
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <img src="images/logo_rs_panjang.jpg" alt="logo_rs" style="width: 16vw; height: 8vh;">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid" id="navbar">
+            <img src="images/logo_rs_panjang.jpg" alt="logo_rs" class="logo_img">
             <span class="navbar-brand">Program APM</span>
         </div>
     </nav>
 
-    <div class="container-fluid" style="height: 78vh;">
+    <div class="container-fluid" id="content">
         @yield('content')
     </div>
 
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
             <span class="text-muted">© 2025 IT RS Dr. Oen Solo Baru</span>
         </div>
     </footer>
 
-    <script src="bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="scripts/patientInfoScript.js"></script>
     @stack('scripts')
 </body>
 </html>

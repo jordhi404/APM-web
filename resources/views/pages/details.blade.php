@@ -3,36 +3,35 @@
 @section('title', 'details')
 
 @section ('content')
-    <div class="container mt-4">
-        <h2>Rincian Biaya</h2>
+    <div class="container mt-4" id="content-main">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h3>Rincian Biaya</h3>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div id="patient-info" class="mb-3"></div>
+            </div>
+        </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>Layanan</th>
-                    <th>Qty</th>
-                    <th>Satuan</th>
-                    <th>Harga</th>
+                    <th>Banyak</th>
+                    <th>Harga Satuan</th>
+                    <th>Harga Akhir</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Sewa Kamar</td>
-                    <td>1</td>
-                    <td>buah</td>
-                    <td>300.000</td>
-                </tr>
-                <tr>
-                    <td>Konsultasi Gizi</td>
-                    <td>4</td>
-                    <td>hari</td>
-                    <td>80.000</td>
-                </tr>
-                <tr>
-                    <td colspan="3"><strong>Total</strong></td>
-                    <td>380.000</td>
-                </tr>
+                <!-- Diolah di function getPatientBill di script.js -->
             </tbody>
         </table>
+
+        <h6 class="text-right mt-6" id="total-tagihan"></h6>
+
         <button class="btn btn-primary" onclick="window.location.href = '/metode-bayar'">Lanjut Pembayaran</button>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="scripts/patientBillScript.js"></script>
+@endpush

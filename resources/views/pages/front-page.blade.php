@@ -14,7 +14,7 @@
 @endpush
 
 @section ('content')
-    <div class="content-container mt-4">
+    <div class="content-container mt-4" id="content-main">
         <h3>Selamat Datang di Sistem Pembayaran Mandiri RS Dr. Oen Solo Baru</h3>
         <button class="btn btn-primary" onclick="window.location.href = '/index'">Mulai Pembayaran</button>
     </div>

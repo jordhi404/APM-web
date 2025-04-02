@@ -1,5 +1,79 @@
+/* Media Query */
+/* Portrait */
+@media (max-height: 1600px) and (max-width: 900px) {
+    #navbar {
+        height: 5vh;
+    }
+
+    #content-main {
+        padding-top: 20vh;
+    }
+
+    .logo_img {
+        width: 33vw;
+        height: 5vh;
+    }
+
+    .payment-container {
+        width: 30vw;
+        text-align: center;
+    }
+
+    #payment-check {
+        width: 17vw;
+        height: 10vh;
+    }
+}
+
+/* Landscape */
+@media (max-width:1600px) and (max-height: 900px) { 
+    #navbar {
+        height: 8vh;
+    }
+
+    /* CSS navbar */
+    .logo_img {
+        width: 16vw;
+        height: 8vh;
+    }
+
+    .payment-container {
+        width: 30vw;
+        text-align: center;
+    }
+
+    /* CSS page payment-success */
+    #payment-check {
+        width: 13vw;
+        height: 20vh;
+    }
+}
+
 /* Base Styles */
 @font-face {
     font-family: 'Montserrat';
     src: url('fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* CSS konten */
+#content {
+    height: 78vh;
+    flex: 1;
+}
+
+.footer {
+    background-color: lightgrey;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
