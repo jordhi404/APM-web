@@ -3,7 +3,7 @@
 @section('title', 'metode-bayar')
 
 @push('styles')
-<style>
+    <style>
         .radio-container {
             display: flex;
             flex-direction: column;
@@ -37,7 +37,7 @@
 @endpush
 
 @section ('content')
-    <div class="payment-container mt-4" id="content-main"> 
+    <div class="payment-container mt-4"> 
         <div class="text-center" style="font-size: 25px;">Pilih Metode Bayar</div><br>
         <div class="radio-container">
             <label class="radio-option">
@@ -57,7 +57,34 @@
                 <i class="fa-solid fa-wallet" style="margin-right: 5px;"></i>
                 <label>Cash</label>
             </label>
-        </div> <br>
-        <button class="btn btn-primary" onclick="window.location.href = '/payment-success'">Lanjut</button>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <button class="btn btn-danger" onclick="window.location.href = '/details'">Kembali</button>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <button class="btn btn-primary" id="btn-lanjut">Lanjut</button>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.getElementById('btn-lanjut').addEventListener('click', function() {
+            const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            let url = '';
+
+            if (selectedMethod === 'Qris') {
+                url = `/qr-payment`;
+            } else if (selectedMethod === 'Transfer') {
+                url = '/tf-payment';
+            } else if (selectedMethod === 'Cash') {
+                url = '/cash-payment';
+            }
+
+            window.location.href = url;
+        });
+    </script>
+    <script src="scripts/generateBill.js"></script>
+@endpush
