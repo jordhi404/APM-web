@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'My App')</title>
     <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -10,14 +11,18 @@
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light mb-4 p-0">
         <div class="container-fluid" id="navbar">
-            <img src="images/logo_rs_panjang.jpg" alt="logo_rs" class="logo_img">
-            <span class="navbar-brand">Program APM</span>
+            <!-- <img src="images/logo_rs_panjang.jpg" alt="logo_rs" class="logo_img">
+            <span class="navbar-brand">Program APM</span> -->
+            <div>Some content will displayed here</div>
         </div>
     </nav>
 
     <div class="container-fluid" id="content">
+        <div>
+            <a href="/welcome" onclick="sessionStorage.clear()"><i class="fa-solid fa-house"> Halaman utama</i></a>
+        </div>
         @yield('content')
     </div>
 
