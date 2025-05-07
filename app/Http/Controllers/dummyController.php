@@ -64,128 +64,144 @@ class dummyController extends Controller
 
         $data_pasien = Patient::where('MedicalNo', $RM)
                         ->whereDate('DateOfBirth', $dob)
-                        ->whereHas('registrations.patientBills', function($query) {
-                            $query->whereNull('PaymentID')
-                                ->whereHas('registration', function ($subQuery) {
-                                    $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
-                                            ->where('GCCustomerType', 'X004^999');
-                                });
-                        })
-                        ->with([
-                            'registrations' => function ($regQuery) {
-                                $regQuery->where('GCCustomerType', 'X004^999')
-                                        ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
-                                        ->with(['patientBills' => function ($billQuery) {
-                                            $billQuery->whereNull('PaymentID')
-                                                    ->with(['chargesHd' => function ($chargesHdQuery) {
-                                                        $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
-                                                                            $detailsQuery->where('IsDeleted', 0)
-                                                                                        ->with('item');
-                                                                        }])
-                                                                        ->whereNotIn('GCTransactionStatus', ['X121^999'])
-                                                                        ->orderByDesc('TransactionDate');
-                                                    }]);
-                                        }]);
-                            }
-                        ]) 
                         ->first();
+
+        // $data_pasien = Patient::where('MedicalNo', $RM)
+        //                 ->whereDate('DateOfBirth', $dob)
+        //                 ->whereHas('registrations.patientBills', function($query) {
+        //                     $query->whereNull('PaymentID')
+        //                         ->whereHas('registration', function ($subQuery) {
+        //                             $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
+        //                                     ->where('GCCustomerType', 'X004^999');
+        //                         });
+        //                 })
+        //                 ->with([
+        //                     'registrations' => function ($regQuery) {
+        //                         $regQuery->where('GCCustomerType', 'X004^999')
+        //                                 ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
+        //                                 ->with(['patientBills' => function ($billQuery) {
+        //                                     $billQuery->whereNull('PaymentID')
+        //                                             ->with(['chargesHd' => function ($chargesHdQuery) {
+        //                                                 $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
+        //                                                                     $detailsQuery->where('IsDeleted', 0)
+        //                                                                                 ->with('item');
+        //                                                                 }])
+        //                                                                 ->whereNotIn('GCTransactionStatus', ['X121^999'])
+        //                                                                 ->orderByDesc('TransactionDate');
+        //                                             }]);
+        //                                 }]);
+        //                     }
+        //                 ]) 
+        //                 ->first();
 
         if(!$data_pasien) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Pasien tidak ditemukan. Cek kembali nomor rekam medis dan tanggal lahir.'
             ], 404);
-        }
+        } else {
+            $latest_registration = $data_pasien->registrations()
+                                    ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
+                                    ->where('GCCustomerType', 'X004^999')                                  
+                                    ->orderByDesc('RegistrationDate')
+                                    ->first();
 
-        return response()->json($data_pasien);
+            $RegistrationNo = $latest_registration->RegistrationNo ?? null;
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $data_pasien, 
+                'reg_no' => $RegistrationNo
+            ]);
+        }
     }
 
     /******************************** TAGIHAN DARI MEDIN ********************************/
-    public function getPatientBill(Request $request) {
-        $RM = $request->input('RM');
-        $dob = $request->input('dob');
+    // public function getPatientBill(Request $request) {
+    //     $RM = $request->input('RM');
+    //     $dob = $request->input('dob');
 
-        $patient = Patient::where('MedicalNo', $RM)
-                    ->whereDate('DateOfBirth', $dob)
-                    ->whereHas('registrations.patientBills', function($query) {
-                        $query->whereNull('PaymentID')
-                            ->whereHas('registration', function ($subQuery) {
-                                $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
-                                        ->where('GCCustomerType', 'X004^999');
-                            });
-                    })
-                    ->with([
-                        'registrations' => function ($regQuery) {
-                            $regQuery->where('GCCustomerType', 'X004^999')
-                                    ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
-                                    ->with(['patientBills' => function ($billQuery) {
-                                        $billQuery->whereNull('PaymentID')
-                                                ->with(['chargesHd' => function ($chargesHdQuery) {
-                                                    $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
-                                                                        $detailsQuery->where('IsDeleted', 0)
-                                                                                    ->with('item');
-                                                                    }])
-                                                                    ->whereNotIn('GCTransactionStatus', ['X121^999'])
-                                                                    ->orderByDesc('TransactionDate');
-                                                }]);
-                                    }]);
-                        }
-                    ]) 
-                    ->first();
+    //     $patient = Patient::where('MedicalNo', $RM)
+    //                 ->whereDate('DateOfBirth', $dob)
+    //                 ->whereHas('registrations.patientBills', function($query) {
+    //                     $query->whereNull('PaymentID')
+    //                         ->whereHas('registration', function ($subQuery) {
+    //                             $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
+    //                                     ->where('GCCustomerType', 'X004^999');
+    //                         });
+    //                 })
+    //                 ->with([
+    //                     'registrations' => function ($regQuery) {
+    //                         $regQuery->where('GCCustomerType', 'X004^999')
+    //                                 ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
+    //                                 ->with(['patientBills' => function ($billQuery) {
+    //                                     $billQuery->whereNull('PaymentID')
+    //                                             ->with(['chargesHd' => function ($chargesHdQuery) {
+    //                                                 $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
+    //                                                                     $detailsQuery->where('IsDeleted', 0)
+    //                                                                                 ->with('item');
+    //                                                                 }])
+    //                                                                 ->whereNotIn('GCTransactionStatus', ['X121^999'])
+    //                                                                 ->orderByDesc('TransactionDate');
+    //                                             }]);
+    //                                 }]);
+    //                     }
+    //                 ]) 
+    //                 ->first();
 
-        if (!$patient) {
-            return response()->json([
-                'status' => 'kosong',
-                'message' => 'Pasien tidak ditemukan atau tidak ada tagihan aktif untuk pasien ini.'
-            ], 404);
-        }
+    //     if (!$patient) {
+    //         return response()->json([
+    //             'status' => 'kosong',
+    //             'message' => 'Pasien tidak ditemukan atau tidak ada tagihan aktif untuk pasien ini.'
+    //         ], 404);
+    //     }
 
-        $tagihan = collect();
-        // $RegistrationNo = $patient->Registrations[0]->RegistrationNo;
+    //     $tagihan = collect();
+    //     // $RegistrationNo = $patient->Registrations[0]->RegistrationNo;
 
-        foreach ($patient->registrations as $reg) {
-            foreach ($reg->patientBills as $bill) {
-                foreach ($bill->chargesHd as $hd) {
-                    foreach ($hd->chargeDetails as $dt) {
-                        $tagihan->push([
-                            'RegistrationNo' => $reg->RegistrationNo,
-                            'TransactionNo' => $hd->TransactionNo,
-                            'Layanan' => $dt->item->ItemName1,
-                            'Banyak' => $dt->ChargedQuantity,
-                            'HargaSatuan' => $dt->Tariff,
-                            'HargaAkhir' => $dt->LineAmount,
-                            'Tanggal' => $hd->TransactionDate,
-                        ]);
-                    }
-                }
-            }
-        }
+    //     foreach ($patient->registrations as $reg) {
+    //         foreach ($reg->patientBills as $bill) {
+    //             foreach ($bill->chargesHd as $hd) {
+    //                 foreach ($hd->chargeDetails as $dt) {
+    //                     $tagihan->push([
+    //                         'RegistrationNo' => $reg->RegistrationNo,
+    //                         'TransactionNo' => $hd->TransactionNo,
+    //                         'Layanan' => $dt->item->ItemName1,
+    //                         'Banyak' => $dt->ChargedQuantity,
+    //                         'HargaSatuan' => $dt->Tariff,
+    //                         'HargaAkhir' => $dt->LineAmount,
+    //                         'Tanggal' => $hd->TransactionDate,
+    //                     ]);
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        $totalTagihan = $tagihan->sum('HargaAkhir');
-        $RegistrationNo = $tagihan->first()['RegistrationNo'] ?? null;
-        $matchedRegistration = $patient->registrations->firstWhere('RegistrationNo', $RegistrationNo);
+    //     $totalTagihan = $tagihan->sum('HargaAkhir');
+    //     $RegistrationNo = $tagihan->first()['RegistrationNo'] ?? null;
+    //     $matchedRegistration = $patient->registrations->firstWhere('RegistrationNo', $RegistrationNo);
 
-        session(['registration_no' => $RegistrationNo]);
+    //     session(['registration_no' => $RegistrationNo]);
 
-        return response()->json([
-            'status' => 'success',
-            'pasien' => [
-                'MedicalNo' => $patient->MedicalNo,
-                'Nama' => $patient->FullName,
-                'DateOfBirth' => $patient->DateOfBirth,
-            ],
-            'registration' =>[
-                'RegistrationID' => $matchedRegistration?->RegistrationID,
-                'RegistrationDate' => $matchedRegistration?->RegistrationDate,
-                'RegistrationTime' => $matchedRegistration?->RegistrationTime,
-                'RegistrationNo' => $RegistrationNo,
-            ],
-            'data' => $tagihan,
-            'total' => $totalTagihan,
-        ]);
-    }
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'pasien' => [
+    //             'MedicalNo' => $patient->MedicalNo,
+    //             'Nama' => $patient->FullName,
+    //             'DateOfBirth' => $patient->DateOfBirth,
+    //         ],
+    //         'registration' =>[
+    //             'RegistrationID' => $matchedRegistration?->RegistrationID,
+    //             'RegistrationDate' => $matchedRegistration?->RegistrationDate,
+    //             'RegistrationTime' => $matchedRegistration?->RegistrationTime,
+    //             'RegistrationNo' => $RegistrationNo,
+    //         ],
+    //         'data' => $tagihan,
+    //         'total' => $totalTagihan,
+    //     ]);
+    // }
 
-    /******************************** QR GENERATOR ********************************/
+    /******************************** QR PAGE ********************************/
     public function showQrPage()
     {
         // try {
@@ -226,7 +242,51 @@ class dummyController extends Controller
     }
 
     public function getPaymentMethod() {
-        Debugbar::info('RegistrationNo: ' . session('registration_no'));
         return view('pages.metode-bayar');
+    }
+
+    public function showFrontPage()
+    {
+        return view('pages.front-page');
+    }
+
+    public function showIndex()
+    {
+        return view('pages.index');
+    }
+
+    public function showDetails()
+    {
+        return view('pages.details');
+    }
+
+    public function showPaymentSuccess()
+    {
+        return view('pages.payment-success');
+    }
+
+    public function handleCallback(Request $request) {
+        $data = $request->getContent();
+        $signature = $request->header('X-Signature');
+
+        $secretKey = env('SI_KRIS_SECRET');
+        $computedSignature = hash_hmac('sha256', $data, $secretKey);
+
+        if (!hash_equals($computedSignature, $signature)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid signature',
+                'signature' => $signature,
+                'computed_signature' => $computedSignature,
+            ], 403);
+        }
+
+        $payload = json_decode($data, true);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Callback received successfully',
+            'payload' => $payload,
+        ], 200);
     }
 }

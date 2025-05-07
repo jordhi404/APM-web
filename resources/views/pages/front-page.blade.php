@@ -1,6 +1,6 @@
 @extends('layouts.templates')
 
-@section ('title', 'Welcome Page')
+@section('title', 'Welcome Page')
 
 @push('styles')
     <style>
@@ -24,15 +24,25 @@
     </style>
 @endpush
 
-@section ('content')
+@section('content')
     <div class="content-container mt-4" id="content-main">
         <h3 style="margin-bottom: 18vh;"><strong>SELAMAT DATANG DI ANJUNGAN SELF PAYMENT RS DR.OEN SOLO BARU</strong></h3>
         <div class="sub-title" style="text-align: center; margin-bottom: 1vh;">
             <h4>SILAHKAN PILIH MENU DI BAWAH INI</h4>
         </div>
         <div class="d-grid gap-5 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary" id="btn-front-page"><i class="fa-solid fa-magnifying-glass"></i><br> LIHAT LAYANAN</button>
-            <button class="btn btn-primary" id="btn-front-page" onclick="window.location.href = '/index'"><i class="fa-regular fa-credit-card"></i><br> BAYAR TAGIHAN</button>
+            <a href="" class="btn btn-primary" id="btn-front-page">
+                <div class="mt-5">
+                    <i class="fa-solid fa-magnifying-glass"></i><br>
+                    LIHAT LAYANAN
+                </div>
+            </a>
+            <a href="{{ url('/index') }}" class="btn btn-primary" id="btn-front-page">
+                <div class="mt-5">
+                    <i class="fa-regular fa-credit-card"></i><br>
+                    BAYAR TAGIHAN
+                </div>
+            </a>
         </div>
     </div>
 
@@ -43,7 +53,7 @@
 @endsection
 
 @push('scripts')
-    @if (request() -> routeIs('welcome'))
+    @if (request()->routeIs('welcome'))
         <script>
             let idleTime = 0;
             const idleLimit = 60;
@@ -59,8 +69,8 @@
                 if (ads.style.display === 'block') {
                     ads.style.display = 'none';
                     idlePaused = false;
-                    console.log('[resetIdleTime] Iklan ditutup, redirect ke /welcome');
-                    window.location.href = '/welcome';
+                    console.log('[resetIdleTime] Iklan ditutup, redirect ke front page');
+                    window.location.href = "{{ url('/') }}";
                 }
             }
 

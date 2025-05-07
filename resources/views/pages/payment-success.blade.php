@@ -31,3 +31,7 @@
     </div>
     <button class="btn btn-primary" id="back-btn">Kembali ke beranda</button>
 @endsection
+
+@push ('scripts')
+    <script src="scripts/generatePaymentID.js"></script>
+@endpush

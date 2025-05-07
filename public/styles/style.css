@@ -84,7 +84,7 @@ html, body {
     display: flex;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    background-image: url("/images/Background.png");
+    background-image: url("http://192.167.4.250/apm/images/Background.png");
 }
 
 /* CSS konten */
@@ -111,7 +111,7 @@ html, body {
 }
 
 #btn-front-page {
-    height: 10vh;
-    width: 20vw;
-    font-size: 20px
+    height: 25vh;
+    width: 30vw;
+    font-size: 50px;
 }

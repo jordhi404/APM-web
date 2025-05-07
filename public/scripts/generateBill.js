@@ -1,25 +1,46 @@
 $(document).ready(function() {
     function generateBill() {
         console.log('generateBill function called!');
-        let reg_no = sessionStorage.getItem('reg_no');
-        // let total = sessionStorage.getItem('total');
+        let reg_no = sessionStorage.getItem('registrationNo');
+        let selectedTransactions = sessionStorage.getItem('selected_transactions');
+        let total_amount = sessionStorage.getItem('total_amount');
 
-        if (reg_no) {
+        if (reg_no && selectedTransactions) {
+            let transactions = JSON.parse(selectedTransactions);
+            let detailList = '';
+
+            if(Array.isArray(transactions)) {
+                if(transactions.length === 1) {
+                    detailList = transactions[0];
+                } else if(transactions.length > 1) {
+                    detailList = transactions.join(',');
+                }
+            } else {
+                detailList = transactions;
+            }
+
+            const payload = {                  
+                    registrationNo: reg_no,
+                    detailList: detailList
+            }
+
             $.ajax({
                 type: 'POST',
-                url: 'http://10.100.18.25/si_kris/public/api/medinfras/outpatient/list-patient-bill',
-                data: {
-                    registrationNo: reg_no,
-                },
+                url: 'http://192.167.4.250/si_kris/public/api/medinfras/outpatient/generate-payment-bill',
+                data: JSON.stringify(payload),
+                contentType: 'application/json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
                     console.log('Data berhasil dikirim ke Kris!')
-                    console.log('reg_no: ', reg_no);
+                    console.log('registrationNo: ', reg_no);
+                    console.log('detailList: ', detailList);
+                    console.log('total_amount: ', total_amount);
                     console.log('Response: ', response);
+                    console.log('Response message:', response.message);
 
-                    let billNo = response.data[0].PatientBillingNo;
+                    let billNo = response.data.PatientBillingNo;
 
                     sessionStorage.setItem('billing_no', billNo);
 
@@ -49,7 +70,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            console.log('Data reg_no atau total tidak ditemukan di sessionStorage!');
+            console.log('Data reg_no dan/atau transactionList tidak ditemukan di sessionStorage!');
         }
     }
     

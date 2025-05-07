@@ -59,9 +59,9 @@
             </label>
         </div>
         <div class="row mt-4">
-            <div class="col-md-6">
-                <button class="btn btn-danger" onclick="window.location.href = '/details'">Kembali</button>
-            </div>
+            <!-- <div class="col-md-6">
+                <a href="{{ url('/details') }}" class="btn btn-danger">Kembali</a>
+            </div> -->
             <div class="col-md-6 text-md-end">
                 <button class="btn btn-primary" id="btn-lanjut">Lanjut</button>
             </div>
@@ -76,11 +76,11 @@
             let url = '';
 
             if (selectedMethod === 'Qris') {
-                url = `/qr-payment`;
+                url = `/apm/qr-payment`;
             } else if (selectedMethod === 'Transfer') {
-                url = '/tf-payment';
+                url = '/apm/tf-payment';
             } else if (selectedMethod === 'Cash') {
-                url = '/cash-payment';
+                url = '/apm/cash-payment';
             }
 
             window.location.href = url;
