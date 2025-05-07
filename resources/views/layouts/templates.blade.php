@@ -20,9 +20,9 @@
     </nav>
 
     <div class="container-fluid" id="content">
-        <div>
-            <a href="/welcome" onclick="sessionStorage.clear()"><i class="fa-solid fa-house"> Halaman utama</i></a>
-        </div>
+        <!-- <div>
+            <a href="/apm/" onclick="sessionStorage.clear()"><i class="fa-solid fa-house"> Halaman utama</i></a>
+        </div> -->
         @yield('content')
     </div>
 

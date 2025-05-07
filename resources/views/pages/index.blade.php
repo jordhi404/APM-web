@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="d-md-flex justify-content-md-center">
-            <button class="btn btn-primary" id="btn-check">Cek Pasien</button>
+            <button class="btn btn-primary" id="btn-check" style="width: 100%;">Cek Pasien</button>
         </div>
     </div>
 @endsection

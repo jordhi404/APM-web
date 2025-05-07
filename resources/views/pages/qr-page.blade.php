@@ -10,20 +10,12 @@
                 <div id="patient-info" class="mb-3"></div>
             </div> -->
         </div>
-            <div id="qrcode"></div>
         <!-- <img src="images/rick-roll-qr.png" alt="QR Code" id="qr-code" class="img-fluid mb-3"> -->
-        <!-- @if(isset($qrCode))
-            <div class="visible-print text-center">
-                {!! $qrCode !!}
-            </div>
-            <p class="mt-3">Pesan saat di-scan: <strong>{{ $message }}</strong></p>
-        @else
-            <p>QR Code belum tersedia.</p>
-        @endif -->
+        <div id="qrcode" style="display: none;"></div>
     </div>
 
     <div>
-        <button class="btn btn-primary" onclick="window.location.href = '/payment-success'">Button</button>
+        <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
     </div>
 @endsection
 

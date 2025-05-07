@@ -71,7 +71,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: 'POST',
-                url: `/api/patients-info`,
+                url: `http://192.167.4.250/apm/public/api/patients-info`,
                 data: {
                     RM: RM,
                     dob: dob
@@ -85,14 +85,33 @@ $(document).ready(function() {
                         title: 'Pasien ditemukan!',
                         html: `
                                 <p style="color: #555; font-size: 16px;"> Harap pastikan data pasien sudah benar. </p>
-                                <p><strong>Nama:</strong> ${response.FullName}</p>        
-                            `, // Pasien dari pgsql: response.name || Pasien dari medin dan medin_ws: response.FullName
+                                <div style="text-align: left;">
+                                    <div class="row d-flex">
+                                        <div class="col-2">
+                                            <i class= "fa-regular fa-user"></i>
+                                        </div>
+                                        <div class="col">
+                                            <p><strong>${response.data.FullName}</strong></p>
+                                        </div>
+                                    </div>        
+                                    <div class="row d-flex">
+                                        <div class="col-2">
+                                            <i class= "fa-regular fa-clipboard"></i>
+                                        </div>
+                                        <div class="col">
+                                            <p><strong>${response.reg_no}</strong></p>
+                                        </div>
+                                    </div>
+                                </div>        
+                            `, // Pasien dummy dari pgsql: response.name || Pasien dari medin dan medin_ws: response.FullName
                         confirmButtonText: "Lanjut Pembayaran",
                     }).then((result) => {
                         if (result.isConfirmed) {
                             sessionStorage.setItem('RM', RM);
                             sessionStorage.setItem('dob', dob);
-                            window.location.href= `/details`;
+                            sessionStorage.setItem('registrationNo', response.reg_no);
+                            // sessionStorage.setItem('reg_no', response.RegistrationNo);
+                            window.location.href= `/apm/details`;
                         }
                     });
                 },
@@ -110,7 +129,7 @@ $(document).ready(function() {
     function kembaliKeAwal() {
         $('#back-btn').click(function() {
             sessionStorage.clear();
-            window.location.href = '/welcome';
+            window.location.href = '/apm/';
             console.log('Session cleared!');
         });
     }
