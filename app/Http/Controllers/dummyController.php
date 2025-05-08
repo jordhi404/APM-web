@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\dummy_data;
 use App\Models\list_harga;
 use App\Models\TagihanDummy;
 use App\Models\patient;
 use Barryvdh\Debugbar\Facades\Debugbar;
-
-use function Pest\Laravel\get;
+use Illuminate\Support\Facades\Log;
 
 class dummyController extends Controller
 {
@@ -266,6 +264,8 @@ class dummyController extends Controller
     }
 
     public function handleCallback(Request $request) {
+        // Log::info('Received callback from SI-KRIS');
+
         $data = $request->getContent();
         $signature = $request->header('X-Signature');
 
@@ -282,6 +282,14 @@ class dummyController extends Controller
         }
 
         $payload = json_decode($data, true);
+        // Log::info('Payload: ', $payload);
+
+        $status = $payload['status'] ?? null;
+
+        // if($status == 'PAID') {
+        //     // Log::info('Payment successful');
+        //     // event(new paymentSuccess($payload['status']));
+        // }
 
         return response()->json([
             'status' => 'success',
