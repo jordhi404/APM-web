@@ -264,7 +264,7 @@ class dummyController extends Controller
     }
 
     public function handleCallback(Request $request) {
-        // Log::info('Received callback from SI-KRIS');
+        Log::info('Received callback from SI-KRIS');
 
         $data = $request->getContent();
         $signature = $request->header('X-Signature');
@@ -282,14 +282,14 @@ class dummyController extends Controller
         }
 
         $payload = json_decode($data, true);
-        // Log::info('Payload: ', $payload);
 
         $status = $payload['status'] ?? null;
 
-        // if($status == 'PAID') {
-        //     // Log::info('Payment successful');
-        //     // event(new paymentSuccess($payload['status']));
-        // }
+        if($status == 'PAID') {
+            Log::info('Payment successful');
+            Log::info('Payload: ', $payload);
+            // event(new paymentSuccess($payload['status']));
+        }
 
         return response()->json([
             'status' => 'success',
