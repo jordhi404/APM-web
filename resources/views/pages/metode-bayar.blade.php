@@ -3,67 +3,70 @@
 @section('title', 'metode-bayar')
 
 @push('styles')
-    <style>
-        .radio-container {
+    <style>      
+        .option-card {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 10px; /* Jarak antar pilihan */
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            width: 200px; /* Samakan lebar semua kotak */
-            padding: 10px;
-            border: 2px solid black;
+            background-color: #e9f3ff;
+            border: 2px solid #ccc;
             border-radius: 10px;
-            background-color: white;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 26px;
+            height: 240px;
+            width: 200px;
         }
 
-        .radio-option input {
-            margin-right: 10px; /* Jarak antara radio button dan teks */
+        .option-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-image: url('images/abyan-athif-BCx6t5pJwVw-unsplash.jpg');
+            border-color: #007bff;
         }
 
-        .radio-option:hover {
-            background-color: #f0f0f0;
+        .option-card.selected {
+            border-color: #007bff;
+            background-image: url('images/abyan-athif-BCx6t5pJwVw-unsplash.jpg');
         }
 
-        .radio-option input:checked {
-            background-color:#ffffff;
-            font-weight: bold;
+        .option-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 @endpush
 
 @section ('content')
     <div class="payment-container mt-4"> 
-        <div class="text-center" style="font-size: 25px;">Pilih Metode Bayar</div><br>
-        <div class="radio-container">
-            <label class="radio-option">
-                <input type="radio" name="payment-method" value="Qris" checked>
-                <i class="fa-solid fa-qrcode" style="margin-right: 5px;"></i>
-                <label>QRIS</label>
-            </label>
-
-            <label class="radio-option">
-                <input type="radio" name="payment-method" value="Transfer">
-                <i class="fa-solid fa-money-bill-transfer" style="margin-right: 5px;"></i>
-                <label>Transfer</label>
-            </label>
-
-            <label class="radio-option">
-                <input type="radio" name="payment-method" value="Cash">
-                <i class="fa-solid fa-wallet" style="margin-right: 5px;"></i>
-                <label>Cash</label>
-            </label>
+        <div class="text-center mb-4" style="font-size: 25px;">Pilih Metode Bayar</div><br>
+        
+        <div class="d-grid gap-5 d-flex justify-content-start">
+            <div class="col-md-6">
+                <div class="option-card" data-method="Qris">
+                    <i class="fa-solid fa-qrcode option-icon"></i>
+                    QRIS
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="option-card" data-method="Transfer">
+                    <i class="fa-solid fa-money-bill-transfer option-icon"></i>
+                    Transfer
+                </div>
+            </div>
         </div>
+
         <div class="row mt-4">
-            <!-- <div class="col-md-6">
-                <a href="{{ url('/details') }}" class="btn btn-danger">Kembali</a>
-            </div> -->
-            <div class="col-md-6 text-md-end">
-                <button class="btn btn-primary" id="btn-lanjut">Lanjut</button>
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary hidden" id="btn-lanjut">Lanjut</button>
             </div>
         </div>
     </div>
@@ -71,19 +74,49 @@
 
 @push('scripts')
     <script>
-        document.getElementById('btn-lanjut').addEventListener('click', function() {
-            const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+        const optionCards = document.querySelectorAll('.option-card');
+        const btnLanjut = document.getElementById('btn-lanjut');
+        let selectedMethod = null;
+
+        // Saat card diklik
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const method = card.dataset.method;
+
+                // Jika selected diklik lagi -> unselect
+                if (card.classList.contains('selected')) {
+                    card.classList.remove('selected');
+                    selectedMethod = null;
+                    btnLanjut.classList.add('hidden');
+                } else {
+                    // Hapus class selected dari semua card
+                    optionCards.forEach(c => c.classList.remove('selected'));
+
+                    // Tambahkan class selected ke card yang diklik
+                    card.classList.add('selected');
+                    selectedMethod = method;
+                    btnLanjut.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Saat tombol lanjut diklik
+        btnLanjut.addEventListener('click', () => {
             let url = '';
 
             if (selectedMethod === 'Qris') {
-                url = `/apm/qr-payment`;
+                // url = `/apm/qr-payment`;
+                url = '/qr-payment';
             } else if (selectedMethod === 'Transfer') {
-                url = '/apm/tf-payment';
-            } else if (selectedMethod === 'Cash') {
-                url = '/apm/cash-payment';
+                // url = '/apm/tf-payment';
+                url = '/tf-payment';
             }
 
-            window.location.href = url;
+            if (url !== '') {
+                window.location.href = url;
+            } else {
+                alert('Silakan pilih metode pembayaran.');
+            }
         });
     </script>
     <script src="scripts/generateBill.js"></script>

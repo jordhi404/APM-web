@@ -65,21 +65,38 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="input-RM"><strong>MASUKKAN NO. REKAM MEDIS:</strong></label>
-                        <input type="text" class="form-control" id="input-RM" placeholder="Contoh: 00-11-22-33" readonly><br>
-                        <div id="virtual-keypad" class="custom-hidden">
-                            <div class="key" data-key="1">1</div>
-                            <div class="key" data-key="2">2</div>
-                            <div class="key" data-key="3">3</div>
-                            <div class="key" data-key="4">4</div>
-                            <div class="key" data-key="5">5</div>
-                            <div class="key" data-key="6">6</div>
-                            <div class="key" data-key="7">7</div>
-                            <div class="key" data-key="8">8</div>
-                            <div class="key" data-key="9">9</div>
-                            <div class="key" data-key="del">⌫</div>
-                            <div class="key" data-key="0">0</div>
-                            <div class="key" data-key="clear">C</div>
+                        <label for="input-RM"><strong>NO. REKAM MEDIS PASIEN:</strong></label>
+                        <input type="text" class="form-control" id="input-RM" placeholder="Contoh: 00-11-22-33" readonly data-bs-toggle="modal" data-bs-target="#rmModal"><br>
+                        <div class="modal fade" id="rmModal" tabindex="-1" aria-labelledby="rmModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width: 50vw;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="rmModalLabel">Masukkan No. Rekam Medis</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <input type="text" class="form-control mb-3" id="modal-rm-input" readonly>
+                                        <div id="virtual-keypad">
+                                            <!-- Keypad buttons -->
+                                            <div class="key" data-key="1">1</div>
+                                            <div class="key" data-key="2">2</div>
+                                            <div class="key" data-key="3">3</div>
+                                            <div class="key" data-key="4">4</div>
+                                            <div class="key" data-key="5">5</div>
+                                            <div class="key" data-key="6">6</div>
+                                            <div class="key" data-key="7">7</div>
+                                            <div class="key" data-key="8">8</div>
+                                            <div class="key" data-key="9">9</div>
+                                            <div class="key" data-key="del">⌫</div>
+                                            <div class="key" data-key="0">0</div>
+                                            <div class="key" data-key="clear">C</div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="btn-set-rm" class="btn btn-success" data-bs-dismiss="modal">Atur</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,15 +104,18 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="dob-display"><strong>MASUKKAN TANGGAL LAHIR PASIEN:</strong></label>
+                        <label for="dob-display"><strong>TANGGAL LAHIR PASIEN:</strong></label>
                         <input type="text" class="form-control" id="dob-display" readonly placeholder="Pilih Tanggal Lahir"><br>
 
                         <!-- Modal Scroll Picker -->
                         <div class="modal fade" id="dob-modal" tabindex="-1" aria-labelledby="dobModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content dob-modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="rmModalLabel">SCROLL DAN PILIH</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
                                     <div class="modal-body">
-                                        <div class="d-flex justify-content-center" id="modal-title"><strong>SCROLL DAN PILIH</strong></div><br>
                                         <div class="scroll-group d-flex justify-content-center">
                                             <div class="mx-2 text-center">
                                                 <div id="year-label"><strong>Tahun</strong></div> 
@@ -110,9 +130,9 @@
                                                 <div class="scroll-column" id="dayPicker" style="max-height: 200px; overflow-y: auto;"></div>
                                             </div>
                                         </div>
-                                        <div class="text-center mt-3">
-                                            <button id="confirmDob" class="btn btn-success">Atur</button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="confirmDob" class="btn btn-success">Atur</button>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +142,8 @@
             </div>
         </div>
         <div class="d-md-flex justify-content-md-center">
-            <button class="btn btn-primary" id="btn-check" style="width: 100%;">Cek Pasien</button>
+            <button class="btn btn-primary" id="btn-check" style="width: 100%; margin-bottom: 15px;">Cek Pasien</button>
+            <button class="btn btn-danger" id="back-btn" style="width: 100%;">Kembali</button>
         </div>
     </div>
 @endsection
@@ -131,17 +152,13 @@
     <script src="scripts/patientInfoScript.js"></script>
     <script src="scripts/date-pick.js"></script>
     <script>
-        const input = document.getElementById('input-RM');
-        const keypad = document.getElementById('virtual-keypad');
+        const modalInput = document.getElementById('modal-rm-input');
+        const mainInput = document.getElementById('input-RM');
 
-        input.addEventListener('focus', () => {
-            keypad.classList.remove('custom-hidden');
-        });
-
-        document.querySelectorAll('.key').forEach(key => {
+        document.querySelectorAll('#virtual-keypad .key').forEach(key => {
             key.addEventListener('click', () => {
                 const keyValue = key.getAttribute('data-key');
-                let currentValue = input.value.replace(/-/g, '');
+                let currentValue = modalInput.value.replace(/-/g, '');
 
                 if (keyValue === 'del') {
                     currentValue = currentValue.slice(0, -1);
@@ -151,19 +168,22 @@
                     currentValue += keyValue;
                 }
 
-                input.value = formatRM(currentValue);
+                modalInput.value = formatRM(currentValue);
             });
         });
 
-        // Hide the keypad when clicking outside of it.
-        document.addEventListener('click', (event) => {
-            if (!keypad.contains(event.target) && event.target !== input) {
-                keypad.classList.add('custom-hidden');
-            }
+        // Tombol atur di modal
+        document.getElementById('btn-set-rm').addEventListener('click', () => {
+            mainInput.value = modalInput.value;
         });
 
         function formatRM(value) {
             return value.match(/.{1,2}/g)?.join('-') || '';
         }
+
+        // Reset input modal saat modal dibuka
+        document.getElementById('rmModal').addEventListener('show.bs.modal', () => {
+            modalInput.value = formatRM(mainInput.value.replace(/-/g, ''));
+        });
     </script>
 @endpush

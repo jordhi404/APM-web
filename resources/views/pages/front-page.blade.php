@@ -26,7 +26,7 @@
 
 @section('content')
     <div class="content-container mt-4" id="content-main">
-        <h3 style="margin-bottom: 18vh;"><strong>SELAMAT DATANG DI ANJUNGAN SELF PAYMENT RS DR.OEN SOLO BARU</strong></h3>
+        <h3 style="margin-bottom: 10vh;"><strong>SELAMAT DATANG DI ANJUNGAN SELF PAYMENT RS DR.OEN SOLO BARU</strong></h3>
         <div class="sub-title" style="text-align: center; margin-bottom: 1vh;">
             <h4>SILAHKAN PILIH MENU DI BAWAH INI</h4>
         </div>
@@ -56,7 +56,7 @@
     @if (request()->routeIs('welcome'))
         <script>
             let idleTime = 0;
-            const idleLimit = 60;
+            const idleLimit = 15;
             let idlePaused = false;
 
             function resetIdleTime() {
@@ -75,7 +75,7 @@
             }
 
             function showAdsVideo() {
-                console.log('[showAdsVideo] Tidak ada aktivitas selama 60 detik, tampilkan iklan.');
+                console.log('[showAdsVideo] Tidak ada aktivitas selama 15 detik, tampilkan iklan.');
                 const ads = document.getElementById('ads-container');
                 ads.style.display = 'block';
                 const video = document.getElementById('ads-video');
