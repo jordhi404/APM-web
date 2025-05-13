@@ -22,9 +22,8 @@
             </div>
             <div class="col-md-6 text-md-end">
                 <div class="d-grid gap-3 d-md-flex justify-content-md-end">
-                    <button class="btn btn-danger" id="back-btn">Batal</button>
-                    <!-- <a class="btn btn-primary" href="{{ route('qr-payment', ['RegistrationNo' => session('registration_no')]) }}">Bayar</a> -->
                     <a class="btn btn-primary" id="btnBayar" href="{{ route('metode-bayar', ['RegistrationNo' => session('registration_no')]) }}">Bayar</a>
+                    <button class="btn btn-danger" id="back-btn">Batal</button>
                 </div>
             </div>
         </div>

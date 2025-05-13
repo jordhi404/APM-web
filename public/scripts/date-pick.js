@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentYear = new Date().getFullYear();
 
   // Populate Years (1900 - currentYear)
-  for (let y = 1900; y <= currentYear; y++) {
+  for (let y = 1940; y <= currentYear; y++) {
     const div = document.createElement('div');
     div.textContent = y;
     div.dataset.value = y;
