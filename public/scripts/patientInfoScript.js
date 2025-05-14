@@ -111,8 +111,8 @@ $(document).ready(function() {
                             sessionStorage.setItem('dob', dob);
                             sessionStorage.setItem('registrationNo', response.reg_no);
                             // sessionStorage.setItem('reg_no', response.RegistrationNo);
-                            // window.location.href= `/apm/details`;
-                            window.location.href= `/details`;
+                            window.location.href= `/apm/details`;
+                            // window.location.href= `/details`;
                         }
                     });
                 },
@@ -130,8 +130,8 @@ $(document).ready(function() {
     function kembaliKeAwal() {
         $('#back-btn').click(function() {
             sessionStorage.clear();
-            // window.location.href = '/apm/';
-            window.location.href = '/';
+            window.location.href = '/apm/';
+            // window.location.href = '/';
             console.log('Session cleared!');
         });
     }
