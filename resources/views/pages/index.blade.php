@@ -140,10 +140,14 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-md-flex justify-content-md-center">
-            <button class="btn btn-primary" id="btn-check" style="width: 100%; margin-bottom: 15px;">Cek Pasien</button>
-            <button class="btn btn-danger" id="back-btn" style="width: 100%;">Kembali</button>
+            <div class="d-flex gap-3 justify-content-center">
+                <div class="col-6">
+                    <button class="btn btn-danger" id="back-btn" style="width: 100%;">Kembali</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-primary" id="btn-check" style="width: 100%; margin-bottom: 15px;">Cek Pasien</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

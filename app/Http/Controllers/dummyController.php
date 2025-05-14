@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PaidPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\dummy_data;
@@ -202,40 +203,6 @@ class dummyController extends Controller
     /******************************** QR PAGE ********************************/
     public function showQrPage()
     {
-        // try {
-        //     // $RegistrationNo = session('registration_no');
-        //     // $RegistrationNo = "OTR/20240901/00011";
-
-        //     // if (!$RegistrationNo) {
-        //     //     Debugbar::error('RegistrationNo not found in session.');
-        //     // }
-
-        //     // $strRegistrationNo = str_replace('/', '_', $RegistrationNo);
-        //     $url = "http://10.100.18.25/si_kris/public/api/medinfras/outpatient/lock-transaction";
-
-        //     $response = Http::post($url);
-
-        //     if ($response->successful()) {
-        //         $statusMessage = $response->json();
-
-        //         $message = $statusMessage['message'] ?? 'Tidak ada pesan dari server.';           
-        //     } else {
-        //         Debugbar::error('HTTP request failed with status: ' . $response->status(), [
-        //             'url' => $url,
-        //             'response' => $response->body(),
-        //         ]);
-        //         $message = 'Gagal mendapatkan pesan dari server.';
-        //     }
-        // } catch (\Exception $e) {
-        //     $message = 'Terjadi kesalahan saat menghubungi server: ' . $e->getMessage();
-        // }
-
-        // $qrCode = QrCode::size(100)->generate($message);
-
-        // Debugbar::info('URL dikirim: ' . $url);
-        // Debugbar::info('HTTP status: ' . $response->status());
-        // Debugbar::info('Response body: ' . $response->body());
-
         return view('pages.qr-page');
     }
 
@@ -264,37 +231,36 @@ class dummyController extends Controller
     }
 
     public function handleCallback(Request $request) {
-        // Log::info('Received callback from SI-KRIS');
+        Log::info('Received callback from SI-KRIS');
 
         $data = $request->getContent();
-        $signature = $request->header('X-Signature');
-
-        $secretKey = env('SI_KRIS_SECRET');
-        $computedSignature = hash_hmac('sha256', $data, $secretKey);
-
-        if (!hash_equals($computedSignature, $signature)) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid signature',
-                'signature' => $signature,
-                'computed_signature' => $computedSignature,
-            ], 403);
-        }
 
         $payload = json_decode($data, true);
-        // Log::info('Payload: ', $payload);
 
-        $status = $payload['status'] ?? null;
+        $responseMessage = $payload['responseMessage'] ?? null; // Pastikan kembali response dari bank, mungkin bisa ganti dengan responseCode.
 
-        // if($status == 'PAID') {
-        //     // Log::info('Payment successful');
-        //     // event(new paymentSuccess($payload['status']));
-        // }
+        // $secretKey = env('SI_KRIS_SECRET');
+
+        if ($responseMessage !== 'Successfull') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Response yang didapat: ' . $responseMessage,
+            ], 403);
+        } else {
+            $responseReffId = $payload['additionalInfo']['reffId'] ?? null;
+    
+            if ($responseReffId) {
+                Log::info("Payment successfull!");
+                Log::info('Payload: ', $payload);
+                event(new PaidPayment($responseReffId, $payload));
+            }
+        }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Callback received successfully',
             'payload' => $payload,
+            'test' => 'Payment successful',
         ], 200);
     }
 }
