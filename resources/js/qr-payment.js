@@ -1,0 +1,14 @@
+document.addEventListener('DOMContentLoaded', function () {
+    if (!window.Echo) {
+        console.error('Echo belum tersedia saat DOMContentLoaded');
+        return;
+    } else {
+        console.log('Echo sudah tersedia');
+    }
+
+    window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {
+        // console.log('Broadcast received:', e);
+        window.location.href = "/payment-success"; // local side
+        // window.location.href = "/apm/payment-success"; // server side
+    });
+});

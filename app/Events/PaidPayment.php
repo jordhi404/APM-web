@@ -14,14 +14,16 @@ class PaidPayment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $status;
+    public $data;
+    protected $responseReffId;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($status)
+    public function __construct(string $responseReffId, array $data)
     {
-        $this->status = $status;
+        $this->responseReffId = $responseReffId;
+        $this->data = $data;
     }
 
     /**
@@ -32,7 +34,8 @@ class PaidPayment implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('paid.payment.' . $this->status),
+            new Channel('paid.payment.5ucc355'),
+            // new PrivateChannel('paid.payment.' . $this->responseReffId),
         ];
     }
 
