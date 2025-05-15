@@ -39,7 +39,7 @@
             </a>
             <a href="{{ url('/index') }}" class="btn btn-primary" id="btn-front-page">
                 <div class="mt-5">
-                    <i class="fa-regular fa-credit-card"></i><br>
+                    <i class="fa-regular fa-money-bill-1"></i><br>
                     BAYAR TAGIHAN
                 </div>
             </a>
