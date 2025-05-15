@@ -206,6 +206,16 @@ class dummyController extends Controller
         return view('pages.qr-page');
     }
 
+    public function showCardPage()
+    {
+        return view('pages.card-page');
+    }
+
+    public function showTfPage()
+    {
+        return view('pages.tf-page');
+    }
+
     public function getPaymentMethod() {
         return view('pages.metode-bayar');
     }

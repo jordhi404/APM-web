@@ -21,16 +21,8 @@
             width: 200px;
         }
 
-        .option-card:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            background-image: url('images/abyan-athif-BCx6t5pJwVw-unsplash.jpg');
-            border-color: #007bff;
-        }
-
         .option-card.selected {
             border-color: #007bff;
-            background-image: url('images/abyan-athif-BCx6t5pJwVw-unsplash.jpg');
         }
 
         .option-icon {
@@ -50,16 +42,22 @@
         <div class="text-center mb-4" style="font-size: 25px;">Pilih Metode Bayar</div><br>
         
         <div class="d-grid gap-5 d-flex justify-content-start">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="option-card" data-method="Qris">
                     <i class="fa-solid fa-qrcode option-icon"></i>
                     QRIS
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="option-card" data-method="Transfer">
                     <i class="fa-solid fa-money-bill-transfer option-icon"></i>
                     Transfer
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="option-card" data-method="CardPayment">
+                    <i class="fa-solid fa-credit-card option-icon"></i>
+                    Kredit/Debit
                 </div>
             </div>
         </div>
@@ -110,12 +108,20 @@
             } else if (selectedMethod === 'Transfer') {
                 // url = '/apm/tf-payment';
                 url = '/tf-payment';
+            } else if (selectedMethod === 'CardPayment') {
+                // url = '/apm/card-payment';
+                url = '/card-payment';
             }
 
             if (url !== '') {
                 window.location.href = url;
             } else {
-                alert('Silakan pilih metode pembayaran.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Pilih metode pembayaran.',
+                    showConfirmButton: true,
+                });
             }
         });
     </script>
