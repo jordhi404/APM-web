@@ -266,6 +266,16 @@ class dummyController extends Controller
             }
         }
 
+        $payload = json_decode($data, true);
+
+        $status = $payload['status'] ?? null;
+
+        if($status == 'PAID') {
+            Log::info('Payment successful');
+            Log::info('Payload: ', $payload);
+            // event(new paymentSuccess($payload['status']));
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Callback received successfully',
