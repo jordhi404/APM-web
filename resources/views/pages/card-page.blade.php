@@ -23,6 +23,6 @@
     </div>
 
     <div>
-        <button class="btn btn-primary" onclick="window.location.href = '/payment-success'">Button</button>
+        <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
     </div>
 @endsection
