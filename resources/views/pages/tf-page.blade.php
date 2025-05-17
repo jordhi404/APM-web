@@ -31,3 +31,7 @@
         <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
     </div>
 @endsection
+
+@push ('scripts')
+    @vite('resources/js/qr-payment.js')
+@endpush

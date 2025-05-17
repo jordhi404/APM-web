@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyController;
+use App\Http\Controllers\printNotaController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -13,3 +14,5 @@ Route::post('/payment/bank/si-kris-callback', [dummyController::class, 'handleCa
 Route::post('/patients-info', [dummyController::class, 'getPatientInfo'])->name('patientInfo');
 
 Route::post('/patients-bill', [dummyController::class, 'getPatientInfo'])->name('patientBill');
+
+Route::post('/print-bill', [printNotaController::class, 'printPaymentBill'])->name('print-bill');
