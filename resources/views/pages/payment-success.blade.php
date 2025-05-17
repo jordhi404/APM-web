@@ -30,8 +30,23 @@
         </div>
     </div>
     <button class="btn btn-primary" id="back-btn">Kembali ke beranda</button>
+    <button class="btn btn-primary" id="cetak-nota">Cetak Nota</button>
+
+    <div id="nota-container" style="display:none; font-family: monospace;">
+        <h3>RS Contoh Sehat</h3>
+        <p>Jl. Kesehatan No.10, Telp: 021-12345678</p>
+        <hr>
+        <p>Registration No: <span id="reg-no"></span></p>
+        <p>Nama Pasien: <span id="nama-pasien"></span></p>
+        <hr>
+        <table id="rincian-nota" border="0" width="100%"></table>
+        <hr>
+        <p>Total: <strong><span id="total-tagihan"></span></strong></p>
+        <p>ID Pembayaran: <span id="payment-id"></span></p>
+    </div>
 @endsection
 
 @push ('scripts')
     <script src="scripts/generatePaymentID.js"></script>
+    <script src="scripts/print-nota.js"></script>
 @endpush

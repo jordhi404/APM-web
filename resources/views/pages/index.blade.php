@@ -68,7 +68,7 @@
                         <label for="input-RM"><strong>NO. REKAM MEDIS PASIEN:</strong></label>
                         <input type="text" class="form-control" id="input-RM" placeholder="Contoh: 00-11-22-33" readonly data-bs-toggle="modal" data-bs-target="#rmModal"><br>
                         <div class="modal fade" id="rmModal" tabindex="-1" aria-labelledby="rmModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" style="width: 50vw;">
+                            <div class="modal-dialog modal-dialog-centered" style="width: fit-content;">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="rmModalLabel">Masukkan No. Rekam Medis</h5>
