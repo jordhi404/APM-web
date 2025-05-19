@@ -12,10 +12,6 @@
             position: relative;
             top: 10%;
         }
-
-        .btn {
-            margin-left: 45%;
-        }
     </style>
 @endpush
 
@@ -29,8 +25,10 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" id="back-btn">Kembali ke beranda</button>
-    <button class="btn btn-primary" id="cetak-nota">Cetak Nota</button>
+    <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
+        <button class="btn btn-primary" id="back-btn">Kembali ke beranda</button>
+        <button class="btn btn-success" id="cetak-nota"><i class="fa-solid fa-printer"></i>Cetak Nota</button>
+    </div>
 
     <div id="nota-container" style="display:none; font-family: monospace;">
         <h3>RS Contoh Sehat</h3>
