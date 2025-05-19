@@ -41,7 +41,7 @@
     <div class="payment-container mt-4"> 
         <div class="text-center mb-4" style="font-size: 25px;">Pilih Metode Bayar</div><br>
         
-        <div class="d-grid gap-5 d-flex justify-content-start">
+        <div class="d-grid gap-3 d-flex justify-content-start">
             <div class="col-md-4">
                 <div class="option-card" data-method="Qris">
                     <i class="fa-solid fa-qrcode option-icon"></i>
