@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
             sessionStorage.setItem('referenceNo', payload.referenceNo || '');
             sessionStorage.setItem('issuerName', payload.issuerName || '');
         }
+        // window.location.href = "/payment-success"; // local side
+        window.location.href = "/apm/payment-success"; // server side
     });
 
     // function waitForEcho(callback) {

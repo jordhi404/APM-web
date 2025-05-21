@@ -342,6 +342,9 @@ $(document).ready(function() {
                             sessionStorage.clear(); // Hapus semua data di sessionStorage
                             // window.location.href = '/apm/public/'; // Arahkan user kembali ke home
                             window.location.href = '/'; // Arahkan user kembali ke home
+
+                            window.location.href = '/apm/public/'; // Arahkan user kembali ke home
+                            // window.location.href = '/public/'; // Arahkan user kembali ke home
                         }
                     });
                 }
@@ -352,8 +355,8 @@ $(document).ready(function() {
                 title: 'Nomor RM tidak ditemukan!',
                 text: 'Silakan kembali dan masukkan ulang No. RM.',
             }).then(() => {
-                // window.location.href = '/apm/public/index'; // Arahkan user kembali ke home
-                window.location.href = '/index'; // Arahkan user kembali ke home
+                window.location.href = '/apm/public/index'; // Arahkan user kembali ke home
+                // window.location.href = '/index'; // Arahkan user kembali ke home
             });
         }
     }

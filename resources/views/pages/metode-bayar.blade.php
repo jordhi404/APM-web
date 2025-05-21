@@ -103,14 +103,14 @@
             let url = '';
 
             if (selectedMethod === 'Qris') {
-                // url = `/apm/qr-payment`;
-                url = '/qr-payment';
+                url = `/apm/qr-payment`;
+                // url = '/qr-payment';
             } else if (selectedMethod === 'Transfer') {
-                // url = '/apm/tf-payment';
-                url = '/tf-payment';
+                url = '/apm/tf-payment';
+                // url = '/tf-payment';
             } else if (selectedMethod === 'CardPayment') {
-                // url = '/apm/card-payment';
-                url = '/card-payment';
+                url = '/apm/card-payment';
+                // url = '/card-payment';
             }
 
             if (url !== '') {
