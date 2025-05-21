@@ -243,26 +243,42 @@ class dummyController extends Controller
     public function handleCallback(Request $request) {
         Log::info('Received callback from SI-KRIS');
 
-        $data = $request->getContent();
+        $data = $request->all();
 
-        $payload = json_decode($data, true);
+        Log::info('Request data: ', $data);
+        $theirSignature = $request->header('X-Signature'); // dari SI-KRIS
+        $secret = env('SI_KRIS_SECRET');
 
-        $responseMessage = $payload['responseMessage'] ?? null; // Pastikan kembali response dari bank, mungkin bisa ganti dengan responseCode.
+        // Hitung signature sendiri
+        $expectedSignature = hash_hmac('sha256', json_encode($data), $secret);
 
-        // $secretKey = env('SI_KRIS_SECRET');
+        if (!hash_equals($expectedSignature, $theirSignature)) {
+            Log::warning('Invalid signature.');
+            return response()->json([
+                'status' => 'unauthorized',
+                'message' => 'Invalid signature',
+                'sent_signature' => $theirSignature,
+                'expected_signature' => $expectedSignature,
+            ], 403);
+        }
 
-        if ($responseMessage !== 'Successfull') {
+        $payload = $data;
+
+        $responseMessage = $payload['transactionStatusDesc'] ?? null;
+
+        if ($responseMessage !== 'success') {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Response yang didapat: ' . $responseMessage,
             ], 403);
         } else {
-            $responseReffId = $payload['additionalInfo']['reffId'] ?? null;
+            $responseReffNo = $payload['referenceNo'] ?? null;
     
-            if ($responseReffId) {
-                Log::info("Payment successfull!");
+            if ($responseReffNo) {
+                Log::info("Payment success!");
                 Log::info('Payload: ', $payload);
-                event(new PaidPayment($responseReffId, $payload));
+                Log::info('Reference No: ' . $responseReffNo);
+                event(new PaidPayment($responseReffNo, $payload));
             }
         }
 

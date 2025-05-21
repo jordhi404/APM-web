@@ -17,11 +17,11 @@
             <!-- Diolah di patientBillScript.js -->
         </div>
         <div class="row mt-3 mb-1">
-            <div class="col-md-6">
+            <div class="col-6">
                 <h6 class="text-right mt-6" id="total-tagihan"></h6>
             </div>
-            <div class="col-md-6 text-md-end">
-                <div class="d-grid gap-3 d-md-flex justify-content-md-end">
+            <div class="col-6 text-end">
+                <div>
                     <a class="btn btn-primary" id="btnBayar" href="{{ route('metode-bayar', ['RegistrationNo' => session('registration_no')]) }}">Bayar</a>
                     <button class="btn btn-danger" id="back-btn">Batal</button>
                 </div>

@@ -8,8 +8,11 @@ $(document).ready(function() {
         let paymentMethod = "021"; // QRIS BRI
         let paymentAmount = sessionStorage.getItem('total_amount');
         let bankCode = "003"; // CIMB NIAGA 9000 (RS), BCA 7256 (YYS).
-        let remarks = "Pembayaran melalui CIMB NIAGA Mandiri oleh pasien";
-        let referenceNo = "1234567890";
+        let remarks = sessionStorage.getItem('remarks'); // Keterangan dari API.
+        let referenceNo = sessionStorage.getItem('referenceNo'); // Nomor referensi dari API.
+        let cardType = "001";
+        let cardProvider = "003";
+        let machineCode = "EDC013";
 
         if (registrationNo && billing_no && paymentAmount) {
             let billList = `${billing_no}-${paymentAmount}`;
@@ -25,7 +28,10 @@ $(document).ready(function() {
                     paymentAmount: paymentAmount,
                     bankCode: bankCode,
                     remarks: remarks,
-                    referenceNo: referenceNo
+                    referenceNo: referenceNo,
+                    cardType: cardType,
+                    cardProvider: cardProvider,
+                    machineCode: machineCode
                 }),
                 contentType: 'application/json',
                 headers: {
