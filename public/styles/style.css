@@ -125,7 +125,7 @@ html, body {
 }
 
 #navbar {
-    height: 17vh;
+    height: 23vh;
     padding: 0;
     background-color: #ffffff;
 }
@@ -147,14 +147,8 @@ html, body {
     width: 100%;
 }
 
-#btn-front-page {
-    height: 20vh;
-    width: 35vw;
-    font-size: 30px;
-}
-
 .carousel-item {
-    height: 17vh    
+    height: 23vh    
 }
    
 .carousel-indicators [data-bs-target] {
