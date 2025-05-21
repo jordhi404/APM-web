@@ -21,6 +21,16 @@
             background-color: rgba(0, 0, 0, 0.8);
             z-index: 9999;
         }
+
+        #btn-front-page {
+            height: 20vh;
+            width: 35vw;
+        }
+
+        #front-btn-img {
+            height: 20vh;
+            width: 34vw;
+        }
     </style>
 @endpush
 
@@ -30,18 +40,20 @@
         <div class="sub-title" style="text-align: center; margin-bottom: 1vh;">
             <h4>SILAHKAN PILIH MENU DI BAWAH INI</h4>
         </div>
-        <div class="d-grid gap-5 d-md-flex justify-content-md-end">
-            <a href="" class="btn btn-primary" id="btn-front-page">
-                <div class="mt-5">
+        <div class="d-flex gap-5 d-md-flex justify-content-md-end">
+            <a href="" class="btn" id="btn-front-page">
+                <!-- <div class="mt-5">
                     <i class="fa-solid fa-magnifying-glass"></i><br>
                     LIHAT LAYANAN
-                </div>
+                </div> -->
+                <img src="images/Lihat promo.png" alt="lihat-promo" id="front-btn-img">
             </a>
-            <a href="{{ url('/index') }}" class="btn btn-primary" id="btn-front-page">
-                <div class="mt-5">
+            <a href="{{ url('/index') }}" class="btn" id="btn-front-page">
+                <!-- <div class="mt-5">
                     <i class="fa-regular fa-money-bill-1"></i><br>
                     BAYAR TAGIHAN
-                </div>
+                </div> -->
+                <img src="images/Bayar Tagihan.png" alt="bayar-tagihan" id="front-btn-img">
             </a>
         </div>
     </div>
@@ -56,7 +68,7 @@
     @if (request()->routeIs('welcome'))
         <script>
             let idleTime = 0;
-            const idleLimit = 15;
+            const idleLimit = 30; // 30 seconds
             let idlePaused = false;
 
             function resetIdleTime() {

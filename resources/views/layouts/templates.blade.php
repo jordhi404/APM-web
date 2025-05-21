@@ -21,22 +21,22 @@
             <div id="carouselInterval" class="carousel slide" data-bs-ride="carousel">
                 <!-- Indikator -->
                 <div class="carousel-indicators justify-content-center align-items-center">
-                    <button type="button" data-bs-target="#carouselInterval" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselInterval" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselInterval" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    <button type="button" data-bs-target="#carouselInterval" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button data-bs-target="#carouselInterval" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button data-bs-target="#carouselInterval" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button data-bs-target="#carouselInterval" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button data-bs-target="#carouselInterval" data-bs-slide-to="3" aria-label="Slide 4"></button>
                 </div>
 
                 <!-- Isi Carousel -->
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="2000">
-                        <img src="images/abyan-athif-BCx6t5pJwVw-unsplash.jpg" class="d-block w-100" alt="item1">
+                        <img src="images/promo-1.jpg" class="d-block w-100" alt="item1">
                     </div>
                     <div class="carousel-item" data-bs-interval="2000">
-                        <img src="images/anders-jilden-AkUR27wtaxs-unsplash.jpg" class="d-block w-100" alt="item2">
+                        <img src="images/promo-2.jpg" class="d-block w-100" alt="item2">
                     </div>
                     <div class="carousel-item" data-bs-interval="2000">
-                        <img src="images/brittney-weng-P-BPGW56GFo-unsplash.jpg" class="d-block w-100" alt="item3">
+                        <img src="images/promo-3.png" class="d-block w-100" alt="item3">
                     </div>
                     <div class="carousel-item" data-bs-interval="2000">
                         <img src="images/camille-brodard-9j1r-lLPW1o-unsplash.jpg" class="d-block w-100" alt="item4">
