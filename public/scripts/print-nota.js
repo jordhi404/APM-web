@@ -59,20 +59,13 @@ $('#cetak-nota').on('click', function () {
 
   function printNotaQZ(notaText) {
     qz.websocket.connect().then(() => {
-      return qz.printers.find("Microsoft Print to PDF"); // Ganti sesuai printermu
+      return qz.printers.find("80 Printer"); // Ganti sesuai printermu
     }).then((printer) => {
       // alert(printer);
       const config = qz.configs.create(printer);
-      // const htmlFormatted = `
-      //   <html>
-      //     <body>
-      //       <pre style="font-family: 'Courier New', monospace; font-size: 10pt;">${notaText}</pre>
-      //     </body>
-      //   </html>
-      // `;
 
       const data = [{
-        type: 'html', // raw untuk langsung cetak, html untuk uji coba print to PDF. 
+        type: 'raw', // raw untuk langsung cetak, html untuk uji coba print to PDF. 
         format: 'plain',
         data: notaText
       }];
@@ -87,11 +80,10 @@ $('#cetak-nota').on('click', function () {
         showTimerProgressBar: true,
         showConfirmButton: false,
         allowOutsideClick: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
+        didClose: () => {
           sessionStorage.clear();
-          window.location.href = "/"; // local side
-          // window.location.href = "/apm/"; // server side
+          // window.location.href = "/"; // local side
+          window.location.href = "/apm/"; // server side
         }
       });
     }).catch((e) => {
@@ -106,9 +98,9 @@ $('#cetak-nota').on('click', function () {
 
     const line = '='.repeat(48);
     let str = '';
-    str += '     RUMAH SAKIT DR. OEN SOLO BARU\n';
-    str += '     Jl. Bahu Dlopo, Dusun II, Gedangan, Kec. Grogol, Kab. Sukoharjo, Jawa Tengah 57552\n';
-    str += '     Telp. (0271) 620220\n\n';
+    str += '           RUMAH SAKIT DR. OEN SOLO BARU\n';
+    str += '   Jl. Bahu Dlopo, Dusun II, Gedangan, Kec. Grogol, Kab. Sukoharjo, Jawa Tengah 57552\n';
+    str += '             Telp. (0271) 620220\n\n';
     str += `${line}\n`;
 
     const now = new Date();
@@ -134,7 +126,7 @@ $('#cetak-nota').on('click', function () {
 
     str += ' ----------------------------------------------\n';
     str += ` Total Pembayaran         ${right(formatRupiah(total), 15)}\n`;
-    str += `${line}\n\n`;
+    str += `${line}\n`;
   
     str += ` Terima kasih atas pembayaran Anda.\n`;
     str += ` Simpan nota ini sebagai bukti resmi.\n\n`;
