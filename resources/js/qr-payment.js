@@ -8,7 +8,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {
         // console.log('Broadcast received:', e);
+        window.location.href = "/payment-success"; // local side
+        // window.location.href = "/apm/payment-success"; // server side
+
+        const payload = e.data;
+
+        // console.log('Payload:', payload);
+
+        if (payload) {
+            sessionStorage.setItem('remarks', payload.remarks || '');
+            sessionStorage.setItem('referenceNo', payload.referenceNo || '');
+            sessionStorage.setItem('issuerName', payload.issuerName || '');
+        }
         // window.location.href = "/payment-success"; // local side
         window.location.href = "/apm/payment-success"; // server side
     });
+
+    // function waitForEcho(callback) {
+    //     if (window.Echo) {
+    //         callback();
+    //     } else {
+    //         const interval = setInterval(() => {
+    //             if (window.Echo) {
+    //                 clearInterval(interval);
+    //                 callback();
+    //             }
+    //         }, 100);
+    //     }
+    // }
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     waitForEcho(() => {
+    //         console.log('Echo sudah tersedia');
+
+    //         window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {
+    //             window.location.href = "/payment-success";
+
+    //             const payload = e.data;
+    //             if (payload) {
+    //                 sessionStorage.setItem('remarks', payload.remarks || '');
+    //                 sessionStorage.setItem('referenceNo', payload.referenceNo || '');
+    //                 sessionStorage.setItem('issuerName', payload.issuerName || '');
+    //             }
+    //         });
+    //     });
+    // });
 });

@@ -9,21 +9,24 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class PaidPayment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
-    protected $responseReffId;
+    protected $responseReffNo;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(string $responseReffId, array $data)
+    public function __construct(string $responseReffNo, array $data)
     {
-        $this->responseReffId = $responseReffId;
+        $this->responseReffNo = $responseReffNo;
         $this->data = $data;
+
+        Log::info("Event called");
     }
 
     /**

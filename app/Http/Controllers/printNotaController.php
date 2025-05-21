@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class printNotaController extends Controller
 {
@@ -16,6 +17,8 @@ class printNotaController extends Controller
                 'error' => 'Registration number is required'
             ], 400);
         }
+
+        Log::info("Info dari printNota controller, registrationNo: " . $registrationNo);
 
         $data = DB::connection('medinfras_dev')
             ->select("

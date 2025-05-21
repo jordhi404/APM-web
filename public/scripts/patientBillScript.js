@@ -340,6 +340,9 @@ $(document).ready(function() {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             sessionStorage.clear(); // Hapus semua data di sessionStorage
+                            // window.location.href = '/apm/public/'; // Arahkan user kembali ke home
+                            window.location.href = '/'; // Arahkan user kembali ke home
+
                             window.location.href = '/apm/public/'; // Arahkan user kembali ke home
                             // window.location.href = '/public/'; // Arahkan user kembali ke home
                         }
