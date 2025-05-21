@@ -7,7 +7,7 @@ $('#cetak-nota').on('click', function () {
   }
 
   $.ajax({
-    url: `/api/print-bill`,
+    url: `http://192.167.4.250/apm/public/api/print-bill`,
     type: 'POST',
     data: { registrationNo: registrationNo },
     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
