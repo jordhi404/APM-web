@@ -26,7 +26,7 @@ class PaidPayment implements ShouldBroadcast
         $this->responseReffNo = $responseReffNo;
         $this->data = $data;
 
-        Log::info("Event called");
+        // Log::info("Event called");
     }
 
     /**

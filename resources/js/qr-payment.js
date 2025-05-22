@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {
         // console.log('Broadcast received:', e);
-        window.location.href = "/payment-success"; // local side
-        // window.location.href = "/apm/payment-success"; // server side
+        // window.location.href = "/payment-success"; // local side
+        window.location.href = "/apm/payment-success"; // server side
 
         const payload = e.data;
 
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
             sessionStorage.setItem('referenceNo', payload.referenceNo || '');
             sessionStorage.setItem('issuerName', payload.issuerName || '');
         }
+        // window.location.href = "/payment-success"; // local side
+        window.location.href = "/apm/payment-success"; // server side
     });
 
     // function waitForEcho(callback) {
