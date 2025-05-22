@@ -57,21 +57,13 @@ $('#cetak-nota').on('click', function () {
 
   function printNotaQZ(notaText) {
     qz.websocket.connect().then(() => {
-      return qz.printers.find("Microsoft Print to PDF"); // Ganti sesuai printermu
+      return qz.printers.find("80 Printer"); // Ganti sesuai printermu
     }).then((printer) => {
       // alert(printer);
       const config = qz.configs.create(printer);
-      // const htmlFormatted = `
-      //   <html>
-      //     <body>
-      //       <pre style="font-family: 'Courier New', monospace; font-size: 10pt;">${notaText}</pre>
-      //     </body>
-      //   </html>
-      // `;
 
       const data = [{
-        type: 'html', // raw untuk langsung cetak, html untuk uji coba print to PDF. 
-        format: 'plain',
+        type: 'raw', // raw untuk langsung cetak, html untuk uji coba print to PDF. 
         data: notaText
       }];
       return qz.print(config, data);
@@ -85,8 +77,7 @@ $('#cetak-nota').on('click', function () {
         showTimerProgressBar: true,
         showConfirmButton: false,
         allowOutsideClick: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
+        didClose: () => {
           sessionStorage.clear();
           window.location.href = "/"; // local side
           // window.location.href = "/apm/"; // server side
@@ -101,26 +92,27 @@ $('#cetak-nota').on('click', function () {
     const pad = (text, len) => (text + '').padEnd(len).substring(0, len);
     const right = (text, len) => (text + '').padStart(len).substring(0, len);
     const formatRupiah = (angka) => 'Rp ' + Number(angka).toLocaleString('id-ID');
+    const center = (text, width = 48) => {
+      const space = Math.max(0, Math.floor((width - text.length) / 2));
+      return ' '.repeat(space) + text;
+    };
 
     const line = '='.repeat(48);
     let str = '';
-    str += '     RUMAH SAKIT DR. OEN SOLO BARU\n';
-    str += '     Jl. Bahu Dlopo, Dusun II, Gedangan, Kec. Grogol, Kab. Sukoharjo, Jawa Tengah 57552\n';
-    str += '     Telp. (0271) 620220\n\n';
+
+    str += `${center('RUMAH SAKIT DR. OEN SOLO BARU')}\n`;
+    str += `${center('Jl.Bahu Dlopo, Gedangan, Sukoharjo 57552')}\n`;
+    str += `${center('Telp. (0271) 620220')}\n`;
     str += `${line}\n`;
 
     const now = new Date();
-    str += ` Tanggal      : ${now.toLocaleDateString('id-ID')}\n`;
-    str += ` Waktu        : ${now.toLocaleTimeString('id-ID')}\n`;
-    str += ` Status Bayar : BERHASIL\n`;
+    str += ` Tanggal, Waktu : ${now.toLocaleDateString('id-ID')}, ${now.toLocaleTimeString('id-ID')}\n`;
+    str += ` Status Bayar   : BERHASIL\n`;
 
     str += `${line}\n`;
     str += ` Pasien       : ${data[0].FullName}\n`;
-    str += ` No. Reg      : ${data[0].RegistrationNo}\n`;
     str += ` Pembayaran   : ${issuerName}\n`;
     str += `${line}\n`;
-    str += ` RINCIAN TAGIHAN\n`;
-    str += ' ----------------------------------------------\n';
 
     let total = 0;
     data.forEach(item => {
@@ -132,13 +124,16 @@ $('#cetak-nota').on('click', function () {
 
     str += ' ----------------------------------------------\n';
     str += ` Total Pembayaran         ${right(formatRupiah(total), 15)}\n`;
-    str += `${line}\n\n`;
+    str += `${line}\n`;
   
-    str += ` Terima kasih atas pembayaran Anda.\n`;
-    str += ` Simpan nota ini sebagai bukti resmi.\n\n`;
-    str += `${line}\n\n\n`;
+    str += ` Terima kasih atas kunjungan anda.\n\n`;
+    str += `\n\n`;
+    str += `\n\n`;
+    str += `\n\n`;
+    str += `\n\n`;
+    str += `\n\n\n`;
 
-    return str;
+    return str.trimStart();
   }
 
 });

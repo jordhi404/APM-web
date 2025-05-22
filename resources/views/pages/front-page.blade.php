@@ -20,6 +20,37 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             z-index: 9999;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .ads.fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ads {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .ads.active {
+            opacity: 1;
+            z-index: 1;
         }
 
         #btn-front-page {
@@ -59,8 +90,16 @@
     </div>
 
     <!-- Ads Video -->
-    <div id="ads-container">
+    <!-- <div id="ads-container">
         <video id="ads-video" autoplay muted loop src="ads-video/MCU_Gizi.mp4" type="video/mp4"></video>
+    </div> -->
+
+    <!-- Ads -->
+    <div id="ads-container">
+        <div class="slider">
+            <img src="images/Promo-depan-1.png" class="ads active" />
+            <img src="images/Promo-depan-2.png" class="ads" />
+        </div>
     </div>
 @endsection
 
@@ -78,7 +117,7 @@
                 }
 
                 const ads = document.getElementById('ads-container');
-                if (ads.style.display === 'block') {
+                if (ads.style.display === 'flex') {
                     ads.style.display = 'none';
                     idlePaused = false;
                     console.log('[resetIdleTime] Iklan ditutup, redirect ke front page');
@@ -86,18 +125,52 @@
                 }
             }
 
-            function showAdsVideo() {
-                console.log('[showAdsVideo] Tidak ada aktivitas selama 15 detik, tampilkan iklan.');
+            /* Iklan video */
+            // function showAdsVideo() {
+            //     console.log('[showAdsVideo] Tidak ada aktivitas selama 15 detik, tampilkan iklan.');
+            //     const ads = document.getElementById('ads-container');
+            //     ads.style.display = 'block';
+            //     const video = document.getElementById('ads-video');
+            //     idlePaused = true; // Pause idle timer
+            //     video.currentTime = 0; // Reset video to start
+            //     video.play().then(() => {
+            //         console.log('[showAdsVideo] Video iklan diputar.');
+            //     }).catch((error) => {
+            //         console.error('[showAdsVideo] Error memutar video iklan:', error);
+            //     });
+            // }
+
+            /* Iklan gambar */
+            function showAdsSlider() {
+                console.log('[showAdsSlider] Tidak ada aktivitas, tampilkan slider iklan.');
                 const ads = document.getElementById('ads-container');
-                ads.style.display = 'block';
-                const video = document.getElementById('ads-video');
-                idlePaused = true; // Pause idle timer
-                video.currentTime = 0; // Reset video to start
-                video.play().then(() => {
-                    console.log('[showAdsVideo] Video iklan diputar.');
-                }).catch((error) => {
-                    console.error('[showAdsVideo] Error memutar video iklan:', error);
-                });
+                ads.style.display = 'flex';
+
+                const slides = document.querySelectorAll('.ads');
+                let current = 0;
+
+                idlePaused = true;
+
+                // Tampilkan slide pertama
+                slides[current].classList.add('active');
+
+                const slideDuration = 10000; // 10 detik per slide
+                const transitionInterval = setInterval(() => {
+                    slides[current].classList.remove('active');
+                    current++;
+
+                    if (current >= slides.length) {
+                        clearInterval(transitionInterval);
+                        ads.classList.add('fade-out');
+                        // Setelah selesai kembali ke beranda
+                        setTimeout(() => {
+                            window.location.href = "{{ url('/') }}";
+                        }, 1000); // delay sesuai durasi fade-out
+                        return;
+                    }
+
+                    slides[current].classList.add('active');
+                }, slideDuration);
             }
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -111,7 +184,7 @@
                         idleTime++;
                         console.log(`[idleTimer] idleTime sekarang: ${idleTime}`);
                         if (idleTime >= idleLimit) {
-                            showAdsVideo();
+                            showAdsSlider();
                         }
                     }
                 }, 1000);
