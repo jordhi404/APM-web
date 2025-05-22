@@ -23,6 +23,8 @@
 
         .option-card.selected {
             border-color: #007bff;
+            background: url('images/background_kosala.png');
+            background-size: cover;
         }
 
         .option-icon {
@@ -41,20 +43,14 @@
     <div class="payment-container mt-4"> 
         <div class="text-center mb-4" style="font-size: 25px;">Pilih Metode Bayar</div><br>
         
-        <div class="d-grid gap-3 d-flex justify-content-start">
-            <div class="col-md-4">
+        <div class="d-flex gap-4 justify-content-start">
+            <div class="col-6">
                 <div class="option-card" data-method="Qris">
                     <i class="fa-solid fa-qrcode option-icon"></i>
                     QRIS
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="option-card" data-method="Transfer">
-                    <i class="fa-solid fa-money-bill-transfer option-icon"></i>
-                    Transfer
-                </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-6">
                 <div class="option-card" data-method="CardPayment">
                     <i class="fa-solid fa-credit-card option-icon"></i>
                     Kredit/Debit
@@ -105,9 +101,6 @@
             if (selectedMethod === 'Qris') {
                 url = `/apm/qr-payment`;
                 // url = '/qr-payment';
-            } else if (selectedMethod === 'Transfer') {
-                url = '/apm/tf-payment';
-                // url = '/tf-payment';
             } else if (selectedMethod === 'CardPayment') {
                 url = '/apm/card-payment';
                 // url = '/card-payment';
