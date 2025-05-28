@@ -162,7 +162,7 @@
                 html: `
                     <p>Harap pastikan saldo mencukupi karena program SOBA Pay tidak bisa melakukan pembatalan di tengah proses transaksi.</p>
                     <div style="margin-top:15px;">
-                        <input type="checkbox" id="checkSayaMengerti" />
+                        <input type="checkbox" id="checkSayaMengerti" style="transform: scale(1.5); margin-right: 8px;"/>
                         <label for="checkSayaMengerti">Saya mengerti</label>
                     </div>
                 `,

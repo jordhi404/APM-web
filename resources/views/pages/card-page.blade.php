@@ -8,6 +8,11 @@
             width: 300px; /* Atur lebar gambar sesuai kebutuhan */
             height: auto; /* Biarkan tinggi otomatis untuk menjaga proporsi */
         }
+
+        #total_tagihan {
+            font-size: 25px;
+            font-weight: bold;
+        }
     </style>
 @endpush
 
