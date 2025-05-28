@@ -12,6 +12,6 @@ use Illuminate\Support\Facades\Broadcast;
  * This routes/channels.php will not be used for this project.
  */
 
-Broadcast::channel('paid.payment.{responseReffId}', function () {
-    return true;
-});
+// Broadcast::channel('paid.payment.{responseReffId}', function () {
+//     return true;
+// });

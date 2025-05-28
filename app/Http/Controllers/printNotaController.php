@@ -18,7 +18,7 @@ class printNotaController extends Controller
             ], 400);
         }
 
-        Log::info("Info dari printNota controller, registrationNo: " . $registrationNo);
+        // Log::info("Info dari printNota controller, registrationNo: " . $registrationNo);
 
         $data = DB::connection('medinfras_dev')
             ->select("
