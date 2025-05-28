@@ -44,8 +44,8 @@
     @vite('resources/js/qr-payment.js')
     <script>
         $('#btn-batal').click(function() {
-            window.location.href = '/payment-canceled';
-            // window.location.href = '/apm/payment-canceled';
+            // window.location.href = '/payment-canceled';
+            window.location.href = '/apm/payment-canceled';
         });
     </script>
 @endpush
