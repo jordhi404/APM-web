@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (!window.Echo) {
-        console.error('Echo belum tersedia saat DOMContentLoaded');
+        console.error('Echo belum tersedia saat DOMContentLoaded untuk qr-payment');
         return;
     } else {
-        console.log('Echo sudah tersedia');
+        console.log('Echo sudah tersedia untuk qr-payment');
     }
 
     window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {

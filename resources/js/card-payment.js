@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (!window.Echo) {
-        console.error('Echo belum tersedia saat DOMContentLoaded');
+        console.error('Echo belum tersedia saat DOMContentLoaded card.payment');
         return;
     } else {
-        console.log('Echo sudah tersedia');
+        console.log('Echo sudah tersedia untuk card.payment');
     }
 
     window.Echo.channel('card.payment.Y4Y').listen('.card.payment', (e) => {

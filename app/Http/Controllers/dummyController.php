@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\cardPayment;
 use App\Events\PaidPayment;
+use App\Events\CardCancel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\dummy_data;
@@ -134,6 +135,11 @@ class dummyController extends Controller
         return view('pages.payment-success');
     }
 
+    public function showPaymentCanceled()
+    {
+        return view('pages.canceled');
+    }
+
     /* Handling callback response pembayaran */ 
     public function handleCallback(Request $request) {
         Log::info('Received callback from SI-KRIS');
@@ -209,15 +215,27 @@ class dummyController extends Controller
 
         $CardRes = $data;
 
-        $responseMessage = $CardRes['msg'] ?? null;
+        $responseStatus = $CardRes['status'];
+        $responseReferenceNo = $CardRes['reference_no'];
+        $responseMessage = $CardRes['msg'];
 
-        if ($responseMessage !== 'transaksi berhasil') {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Response yang didapat: ' . $responseMessage,
-            ], 403);
+        if ($responseStatus == 'failed') {
+            if ($responseReferenceNo == 'N/A') {
+                $responseTrxId = $CardRes['transaction_id'];
+                event(new CardCancel($responseTrxId, $CardRes));
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $responseMessage . ', Transaksi dibatalkan.',
+                ], 403);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $responseMessage . ', PIN yang dimasukkan salah.',
+                ], 403);
+            }
         } else {
-            $responseTrxId = $CardRes['transaction_id'] ?? null;
+            $responseTrxId = $CardRes['transaction_id'];
     
             if ($responseTrxId) {
                 Log::info("Payment success!");
