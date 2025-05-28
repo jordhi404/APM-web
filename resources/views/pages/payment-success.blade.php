@@ -34,7 +34,7 @@
         <button class="btn btn-primary" id="back-btn">Tidak, kembali ke beranda</button>
     </div>
 
-    <div id="nota-container" style="display:none; font-family: courrier new, monospace;">
+    <!-- <div id="nota-container" style="display:none; font-family: courrier new, monospace;">
         <div id="bill-title" class="text-center mb-3">
             <h3>RUMAH SAKIT DR. OEN SOLO BARU</h3>
             <P>Jalan Bahu Dlopo, Dusun II, Gedangan, Kec. Grogol, Kabupaten Sukoharjo, Jawa Tengah 57552</P>
@@ -58,7 +58,7 @@
             <p>Unduh Aplikasi RS OEN Solo Baru di Play Store</p>
             <img id="promo-qr" src="images/rick-roll-qr.png" alt="QR Aplikasi RS" style="width:100px; height:100px;">
         </div>
-    </div>
+    </div> -->
 @endsection
 
 @push ('scripts')

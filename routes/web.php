@@ -19,7 +19,7 @@ Route::get('/metode-bayar', [dummyController::class, 'getPaymentMethod'])->name(
 // Route::get('/qr-payment/{registrationNo}', [dummyController::class, 'showQrPage'])->name('qr-payment');
 Route::get('/qr-payment', [dummyController::class, 'showQrPage'])->name('qr-payment');
 
-Route::get('/tf-payment', [dummyController::class, 'showTfPage'])->name('tf-payment');
+// Route::get('/tf-payment', [dummyController::class, 'showTfPage'])->name('tf-payment');
 
 Route::get('/card-payment', [dummyController::class, 'showCardPage'])->name('card-payment');
 

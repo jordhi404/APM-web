@@ -156,6 +156,34 @@
     <script src="scripts/patientInfoScript.js"></script>
     <script src="scripts/date-pick.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                title: '📢 Pemberitahuan Penting',
+                html: `
+                    <p>Harap pastikan saldo mencukupi karena program SOBA Pay tidak bisa melakukan pembatalan di tengah proses transaksi.</p>
+                    <div style="margin-top:15px;">
+                        <input type="checkbox" id="checkSayaMengerti" />
+                        <label for="checkSayaMengerti">Saya mengerti</label>
+                    </div>
+                `,
+                icon: 'warning',
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    const confirmBtn = Swal.getConfirmButton();
+                    confirmBtn.disabled = true;
+
+                    const checkbox = Swal.getPopup().querySelector('#checkSayaMengerti');
+                    checkbox.addEventListener('change', () => {
+                        confirmBtn.disabled = !checkbox.checked;
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
         const modalInput = document.getElementById('modal-rm-input');
         const mainInput = document.getElementById('input-RM');
 

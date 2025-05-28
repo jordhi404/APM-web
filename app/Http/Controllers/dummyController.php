@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\cardPayment;
 use App\Events\PaidPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -65,34 +66,6 @@ class dummyController extends Controller
                         ->whereDate('DateOfBirth', $dob)
                         ->first();
 
-        // $data_pasien = Patient::where('MedicalNo', $RM)
-        //                 ->whereDate('DateOfBirth', $dob)
-        //                 ->whereHas('registrations.patientBills', function($query) {
-        //                     $query->whereNull('PaymentID')
-        //                         ->whereHas('registration', function ($subQuery) {
-        //                             $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
-        //                                     ->where('GCCustomerType', 'X004^999');
-        //                         });
-        //                 })
-        //                 ->with([
-        //                     'registrations' => function ($regQuery) {
-        //                         $regQuery->where('GCCustomerType', 'X004^999')
-        //                                 ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
-        //                                 ->with(['patientBills' => function ($billQuery) {
-        //                                     $billQuery->whereNull('PaymentID')
-        //                                             ->with(['chargesHd' => function ($chargesHdQuery) {
-        //                                                 $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
-        //                                                                     $detailsQuery->where('IsDeleted', 0)
-        //                                                                                 ->with('item');
-        //                                                                 }])
-        //                                                                 ->whereNotIn('GCTransactionStatus', ['X121^999'])
-        //                                                                 ->orderByDesc('TransactionDate');
-        //                                             }]);
-        //                                 }]);
-        //                     }
-        //                 ]) 
-        //                 ->first();
-
         if(!$data_pasien) {
             return response()->json([
                 'status' => 'error',
@@ -115,131 +88,53 @@ class dummyController extends Controller
         }
     }
 
-    /******************************** TAGIHAN DARI MEDIN ********************************/
-    // public function getPatientBill(Request $request) {
-    //     $RM = $request->input('RM');
-    //     $dob = $request->input('dob');
-
-    //     $patient = Patient::where('MedicalNo', $RM)
-    //                 ->whereDate('DateOfBirth', $dob)
-    //                 ->whereHas('registrations.patientBills', function($query) {
-    //                     $query->whereNull('PaymentID')
-    //                         ->whereHas('registration', function ($subQuery) {
-    //                             $subQuery->whereNotIn('GCRegistrationStatus', ['X020^006'])
-    //                                     ->where('GCCustomerType', 'X004^999');
-    //                         });
-    //                 })
-    //                 ->with([
-    //                     'registrations' => function ($regQuery) {
-    //                         $regQuery->where('GCCustomerType', 'X004^999')
-    //                                 ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
-    //                                 ->with(['patientBills' => function ($billQuery) {
-    //                                     $billQuery->whereNull('PaymentID')
-    //                                             ->with(['chargesHd' => function ($chargesHdQuery) {
-    //                                                 $chargesHdQuery ->with(['chargeDetails' => function ($detailsQuery) {
-    //                                                                     $detailsQuery->where('IsDeleted', 0)
-    //                                                                                 ->with('item');
-    //                                                                 }])
-    //                                                                 ->whereNotIn('GCTransactionStatus', ['X121^999'])
-    //                                                                 ->orderByDesc('TransactionDate');
-    //                                             }]);
-    //                                 }]);
-    //                     }
-    //                 ]) 
-    //                 ->first();
-
-    //     if (!$patient) {
-    //         return response()->json([
-    //             'status' => 'kosong',
-    //             'message' => 'Pasien tidak ditemukan atau tidak ada tagihan aktif untuk pasien ini.'
-    //         ], 404);
-    //     }
-
-    //     $tagihan = collect();
-    //     // $RegistrationNo = $patient->Registrations[0]->RegistrationNo;
-
-    //     foreach ($patient->registrations as $reg) {
-    //         foreach ($reg->patientBills as $bill) {
-    //             foreach ($bill->chargesHd as $hd) {
-    //                 foreach ($hd->chargeDetails as $dt) {
-    //                     $tagihan->push([
-    //                         'RegistrationNo' => $reg->RegistrationNo,
-    //                         'TransactionNo' => $hd->TransactionNo,
-    //                         'Layanan' => $dt->item->ItemName1,
-    //                         'Banyak' => $dt->ChargedQuantity,
-    //                         'HargaSatuan' => $dt->Tariff,
-    //                         'HargaAkhir' => $dt->LineAmount,
-    //                         'Tanggal' => $hd->TransactionDate,
-    //                     ]);
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     $totalTagihan = $tagihan->sum('HargaAkhir');
-    //     $RegistrationNo = $tagihan->first()['RegistrationNo'] ?? null;
-    //     $matchedRegistration = $patient->registrations->firstWhere('RegistrationNo', $RegistrationNo);
-
-    //     session(['registration_no' => $RegistrationNo]);
-
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'pasien' => [
-    //             'MedicalNo' => $patient->MedicalNo,
-    //             'Nama' => $patient->FullName,
-    //             'DateOfBirth' => $patient->DateOfBirth,
-    //         ],
-    //         'registration' =>[
-    //             'RegistrationID' => $matchedRegistration?->RegistrationID,
-    //             'RegistrationDate' => $matchedRegistration?->RegistrationDate,
-    //             'RegistrationTime' => $matchedRegistration?->RegistrationTime,
-    //             'RegistrationNo' => $RegistrationNo,
-    //         ],
-    //         'data' => $tagihan,
-    //         'total' => $totalTagihan,
-    //     ]);
-    // }
-
-    /******************************** QR PAGE ********************************/
+    /* QR Page */
     public function showQrPage()
     {
         return view('pages.qr-page');
     }
 
+    /* Debit card payment page */
     public function showCardPage()
     {
         return view('pages.card-page');
     }
 
-    public function showTfPage()
-    {
-        return view('pages.tf-page');
-    }
+    // public function showTfPage()
+    // {
+    //     return view('pages.tf-page');
+    // }
 
+    /* Halaman metode bayar */
     public function getPaymentMethod() {
         return view('pages.metode-bayar');
     }
 
+    /* Beranda */
     public function showFrontPage()
     {
         return view('pages.front-page');
     }
 
+    /* Halaman input RM dan dob */ 
     public function showIndex()
     {
         return view('pages.index');
     }
 
+    /* Halaman rincian tagihan */
     public function showDetails()
     {
         return view('pages.details');
     }
 
+    /* Halaman pembayaran selesai */ 
     public function showPaymentSuccess()
     {
         return view('pages.payment-success');
     }
 
+    /* Handling callback response pembayaran */ 
     public function handleCallback(Request $request) {
         Log::info('Received callback from SI-KRIS');
 
@@ -286,6 +181,56 @@ class dummyController extends Controller
             'status' => 'success',
             'message' => 'Callback received successfully',
             'payload' => $payload,
+            'test' => 'Payment successful',
+        ], 200);
+    }
+
+    public function cardPaymentCallback(Request $request) {
+        Log::info('Received card payment callback from SI-KRIS');
+
+        $data = $request->all();
+
+        Log::info('Request data: ', $data);
+        $KRISCardSignature = $request->header('X-Signature'); // dari SI-KRIS
+        $card_secret = env('SIKRIS_CARD_SECRET');
+
+        // Hitung signature sendiri
+        $expectedCardSignature = hash_hmac('sha256', json_encode($data), $card_secret);
+
+        if (!hash_equals($expectedCardSignature, $KRISCardSignature)) {
+            Log::warning('Invalid signature.');
+            return response()->json([
+                'status' => 'unauthorized',
+                'message' => 'Invalid signature',
+                'sent_signature' => $KRISCardSignature,
+                'expected_signature' => $expectedCardSignature,
+            ], 403);
+        }
+
+        $CardRes = $data;
+
+        $responseMessage = $CardRes['msg'] ?? null;
+
+        if ($responseMessage !== 'transaksi berhasil') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Response yang didapat: ' . $responseMessage,
+            ], 403);
+        } else {
+            $responseTrxId = $CardRes['transaction_id'] ?? null;
+    
+            if ($responseTrxId) {
+                Log::info("Payment success!");
+                Log::info('CardRes: ', $CardRes);
+                Log::info('Transaction ID: ' . $responseTrxId);
+                event(new cardPayment($responseTrxId, $CardRes));
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Callback received successfully',
+            'CardRes' => $CardRes,
             'test' => 'Payment successful',
         ], 200);
     }

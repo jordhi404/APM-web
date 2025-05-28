@@ -40,7 +40,7 @@ $(document).ready(function() {
                     if (response) {
                         let qrString = response.data.qrContent;
                         let tot_amount = parseInt(total_amount);
-                        let textMessage = `Total tagihan pasien: ${tot_amount.toLocaleString()}`;
+                        let textMessage = `Total tagihan pasien: Rp ${tot_amount.toLocaleString()}`;
                         console.log('qrContent:', response.data.qrContent);
 
                         $('#qrcode').show();
@@ -54,6 +54,9 @@ $(document).ready(function() {
                             colorLight: "#e0ffff",
                             correctLevel: QRCode.CorrectLevel.M
                         });
+
+                        $('#total_tagihan').text(textMessage);
+
                         console.log('QR Code generated successfully!');
                     } else {
                         console.log('Ada masalah generate QR!');

@@ -11,22 +11,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class PaidPayment implements ShouldBroadcast
+class cardPayment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
-    protected $responseReffNo;
+    protected $responseTrxId;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(string $responseReffNo, array $data)
+    public function __construct(string $responseTrxId, array $data)
     {
-        $this->responseReffNo = $responseReffNo;
+        $this->responseTrxId = $responseTrxId;
         $this->data = $data;
 
-        Log::info("QR Payment Event called");
+        Log::info("Card Payment Event called");
     }
 
     /**
@@ -37,13 +37,12 @@ class PaidPayment implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('paid.payment.5ucc355'),
-            // new PrivateChannel('paid.payment.' . $this->responseReffId),
+            new Channel('card.payment.Y4Y'),
         ];
     }
 
     public function broadcastAs()
     {
-        return 'paid.payment';
+        return 'card.payment';
     }
 }
