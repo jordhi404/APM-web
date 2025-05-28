@@ -32,5 +32,5 @@
 
 @push ('scripts')
     <script src="scripts/card-paid.js"></script>
-    @vite('resources/js/card-payment.js')
+    @vite(['resources/js/card-payment.js', 'resources/js/card-cancel.js'])
 @endpush

@@ -25,6 +25,8 @@ Route::get('/card-payment', [dummyController::class, 'showCardPage'])->name('car
 
 Route::get('/payment-success', [dummyController::class, 'showPaymentSuccess'])->name('payment-success');
 
+Route::get('/payment-canceled', [dummyController::class, 'showPaymentCanceled'])->name('payment-canceled');
+
 // Route::post('/payment/bank/si-kris-callback', [dummyController::class, 'handleCallback'])->name('si-kris-callback');
 
 // Route::post('/api/patients-info', [dummyController::class, 'getPatientInfo'])->name('patientInfo');

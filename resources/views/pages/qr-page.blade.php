@@ -8,6 +8,14 @@
             font-size: 25px;
             font-weight: bold;
         }
+
+        #btn-batal {
+            padding: 0;
+            width: 20vw;
+            height: 5vh;
+            font-size: 27px;
+            font-weight: bold;
+        }
     </style>
 @endpush
 
@@ -24,9 +32,9 @@
         <div class="text-center" id="total_tagihan"></div>
     </div>
 
-    <!-- <div>
-        <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
-    </div> -->
+    <div class="d-flex justify-content-center align-items-center">
+        <button class="btn btn-danger" id="btn-batal">Batal</button>
+    </div>
     
 @endsection
 
@@ -34,4 +42,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="scripts/generateQR.js"></script>
     @vite('resources/js/qr-payment.js')
+    <script>
+        $('#btn-batal').click(function() {
+            window.location.href = '/payment-canceled';
+            // window.location.href = '/apm/payment-canceled';
+        });
+    </script>
 @endpush
