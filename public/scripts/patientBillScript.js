@@ -72,7 +72,6 @@ $(document).ready(function() {
             $.ajax({
                 type: 'POST',
                 url: `http://192.167.4.250/si_kris/public/api/medinfras/outpatient/list-patient-transaction`,
-                // url: `http://192.167.4.250/apm/public/api/patients-bill`,
                 data: {
                     RM: RM,
                     dob: dob,
@@ -81,127 +80,6 @@ $(document).ready(function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                // success: function(response) {
-                //     let accordion = $('#accordionTagihan');
-                //     accordion.empty();
-
-                //     if (response.data.length === 0) {
-                //         accordion.append(`
-                //                 <div class="text-center text-muted">
-                //                     <p>Tidak ada tagihan ditemukan.</p>
-                //                 </div>
-                //             `);
-                //         return;
-                //     }
-
-                //     // Mengelompokkan berdasarkan TransactionDate.
-                //     let grouped = {};
-                //     response.data.forEach(item => {
-                //         if (!grouped[item.TransactionDate]) {
-                //             grouped[item.TransactionDate] = [];
-                //         }
-                //         grouped[item.TransactionDate].push(item);
-                //     });
-
-                //     let index = 0;
-                //     let totalTagihan = 0;
-                //     for (let date in grouped) {
-                //         let items = grouped[date];
-                //         let rows = "";
-
-                //         let transCount = {};
-                //         let transPrinted = {};
-
-                //         // Hitung jumlah layanan per TransactionNo
-                //         items.forEach(item => {
-                //             if (!transCount[item.TransactionNo]) {
-                //                 transCount[item.TransactionNo] = 0;
-                //             }
-                //             transCount[item.TransactionNo]++;
-                //         });
-
-                //         items.forEach(item => {
-                //             const noTrans = item.TransactionNo;
-                    
-                //             rows += `<tr>`;
-                    
-                //             // Cetak TransactionNo hanya sekali, pakai rowspan
-                //             if (!transPrinted[noTrans]) {
-                //                 rows += `
-                //                         <td rowspan="${transCount[noTrans]}">
-                //                             <div class="form-check">
-                //                                 <input class="form-check-input transaction-checkbox" type="checkbox" value="${noTrans}" id="check-${noTrans}">
-                //                                 <label class="form-check-label" for="check-${noTrans}">
-                //                                     ${noTrans}
-                //                                 </label>
-                //                             </div>
-                //                         </td>`;
-                //                 transPrinted[noTrans] = true;
-                //             }
-                    
-                //             rows += `
-                //                 <td>${item.Layanan}</td>
-                //                 <td>${parseFloat(item.Banyak).toFixed(2)}</td>
-                //                 <td>Rp ${Number(item.HargaSatuan).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                //                 <td>Rp ${Number(item.HargaSatuan * item.Banyak).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                //             </tr>`;
-                //         });                    
-
-                //         accordion.append(`
-                //             <div class="accordion-item">
-                //                 <h2 class="accordion-header" id="heading${index}">
-                //                     <button class="accordion-button ${index !== 0 ? 'collapsed' : ''}" type="button"
-                //                         data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="${index === 0}" aria-controls="collapse${index}">
-                //                         Tanggal transaksi:&nbsp;<strong>${date}</strong>
-                //                     </button>
-                //                 </h2>
-                //                 <div id="collapse${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="heading${index}" data-bs-parent="#accordionTagihan">
-                //                     <div class="accordion-body">
-                //                         <table class="table table-bordered">
-                //                             <thead>
-                //                                 <tr>
-                //                                     <th>No. Transaksi</th>
-                //                                     <th>Layanan</th>
-                //                                     <th>Jumlah (desimal)</th>
-                //                                     <th>Harga Satuan</th>
-                //                                     <th>Harga Akhir</th>
-                //                                 </tr>
-                //                             </thead>
-                //                             <tbody>
-                //                                 ${rows}
-                //                             </tbody>
-                //                         </table>
-                //                     </div>
-                //                 </div>
-                //             </div>
-                //         `);
-
-                //         index++;
-                //     }
-
-                //     // Menampilkan total tagihan.
-                //     $('#total-tagihan').html(`
-                //         <strong>TOTAL TAGIHAN PASIEN: Rp ${response.total.toLocaleString()}</strong>
-                //     `);
-
-                //     // Info Pasien.
-                //     if (response.pasien) {
-                //         let pasien = response.pasien;
-                //         let registration = response.registration;
-
-                //         if (registration.RegistrationNo && response.total) {
-                //             sessionStorage.setItem('reg_no', registration.RegistrationNo);
-                //             sessionStorage.setItem('total', response.total);
-                //         }
-
-                //         $('#patient-info').html(`
-                //             <h5>${pasien.Nama} / ${pasien.MedicalNo}</h5>                       
-                //         `);
-                //         $('#info-kunjungan').html(`
-                //             No. Registrasi: ${registration.RegistrationNo}
-                //         `);
-                //     }
-                // },
                 success: function(response) {
                     let accordion = $('#accordionTagihan');
                     accordion.empty();
@@ -358,35 +236,5 @@ $(document).ready(function() {
         }
     }
 
-    // function updateTotalTagihan() {
-    //     let totalTagihan = 0;
-    //     $('.transaction-checkbox:checked').each(function() {
-    //         const row = $(this).closest('tr');
-    //         const amount_text = row.find('td:last').text().replace('Rp', '').replace(/\./g, '').replace(',', '.').trim();
-    //         const amount = parseFloat(amount_text);
-    //         totalTagihan += isNaN(amount) ? 0 : amount;
-    //     });
-
-    //     // Tampilkan total tagihan
-    //     $('#total-tagihan').html(`
-    //         <strong>TOTAL TAGIHAN PASIEN: Rp ${totalTagihan.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-    //     `);
-
-    //     sessionStorage.setItem('total_amount', totalTagihan);
-    // }
-
-    // $(document).on('change', '.transaction-checkbox', function() {
-    //     let selectedTransactions = [];
-    
-    //     $('.transaction-checkbox:checked').each(function() {
-    //         selectedTransactions.push($(this).val());
-    //     });
-    
-    //     sessionStorage.setItem('selected_transactions', JSON.stringify(selectedTransactions));
-    
-    //     updateTotalTagihan();
-    // });
-
     getPatientBill();
-    // updateTotalTagihan();
 });

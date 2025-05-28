@@ -11,6 +11,8 @@ use App\Http\Controllers\printNotaController;
 
 Route::post('/payment/bank/si-kris-callback', [dummyController::class, 'handleCallback'])->name('si-kris-callback');
 
+Route::post('/payment/bank/kris-card-callback', [dummyController::class, 'cardPaymentCallback'])->name('kris-card-callback');
+
 Route::post('/patients-info', [dummyController::class, 'getPatientInfo'])->name('patientInfo');
 
 Route::post('/patients-bill', [dummyController::class, 'getPatientInfo'])->name('patientBill');

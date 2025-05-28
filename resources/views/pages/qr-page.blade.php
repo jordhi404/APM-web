@@ -11,12 +11,13 @@
             </div> -->
         </div>
         <!-- <img src="images/rick-roll-qr.png" alt="QR Code" id="qr-code" class="img-fluid mb-3"> -->
-        <div id="qrcode" style="display: none;"></div>
+        <div class="mb-1" id="qrcode" style="display: none;"></div>
+        <div class="text-center" id="total_tagihan"></div>
     </div>
 
-    <div>
+    <!-- <div>
         <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
-    </div>
+    </div> -->
     
 @endsection
 

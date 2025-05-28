@@ -6,10 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Echo sudah tersedia');
     }
 
-    window.Echo.channel('paid.payment.5ucc355').listen('.paid.payment', (e) => {
-        // console.log('Broadcast received:', e);
-        // window.location.href = "/payment-success"; // local side
-        window.location.href = "/apm/payment-success"; // server side
+    window.Echo.channel('card.payment.Y4Y').listen('.card.payment', (e) => {
+        window.location.href = "/payment-success"; // local side
+        // window.location.href = "/apm/payment-success"; // server side
 
         const payload = e.data;
 

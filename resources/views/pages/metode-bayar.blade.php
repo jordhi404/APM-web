@@ -53,7 +53,7 @@
             <div class="col-6">
                 <div class="option-card" data-method="CardPayment">
                     <i class="fa-solid fa-credit-card option-icon"></i>
-                    Kredit/Debit
+                    Debit
                 </div>
             </div>
         </div>

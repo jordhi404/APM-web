@@ -3,9 +3,9 @@ $(document).ready(function() {
         console.log('generatePaymentID function called!');
         let registrationNo = sessionStorage.getItem('registrationNo');
         let billing_no = sessionStorage.getItem('billing_no');
-        let shift = "001" // Pagi.
-        let cashierGroup = "012"; // Kasir RAJAL.
-        let paymentMethod = "021"; // QRIS BRI
+        let shift = "001" // Pagi. --> STATIS
+        let cashierGroup = "012"; // Kasir RAJAL. --> STATIS
+        let paymentMethod = "021"; // QRIS BRI. --> DINAMIS
         let paymentAmount = sessionStorage.getItem('total_amount');
         let bankCode = "003"; // CIMB NIAGA 9000 (RS), BCA 7256 (YYS).
         let remarks = sessionStorage.getItem('remarks'); // Keterangan dari API.
