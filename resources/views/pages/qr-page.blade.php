@@ -44,8 +44,18 @@
     @vite('resources/js/qr-payment.js')
     <script>
         $('#btn-batal').click(function() {
-            // window.location.href = '/payment-canceled';
-            window.location.href = '/apm/payment-canceled';
+            Swal.fire({
+                title: 'Batalkan Pembayaran?',
+                text: "Apakah anda yakin akan membatalkan pembayaran untuk transaksi ini?",
+                icon: 'warning',
+                allowedOutsideClick: true,
+                confirmButtonText: 'Ya',
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    // window.location.href = '/payment-canceled';
+                    window.location.href = '/apm/payment-canceled';
+                }
+            });
         });
     </script>
 @endpush
