@@ -26,7 +26,7 @@ class CardCancel implements ShouldBroadcast
         $this->responseTrxId = $responseTrxId;
         $this->data = $data;
 
-        Log::info("Cancel Event called");
+        // Log::info("Cancel Event called");
     }
 
     /**

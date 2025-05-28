@@ -26,7 +26,7 @@ class cardPayment implements ShouldBroadcast
         $this->responseTrxId = $responseTrxId;
         $this->data = $data;
 
-        Log::info("Card Payment Event called");
+        // Log::info("Card Payment Event called");
     }
 
     /**

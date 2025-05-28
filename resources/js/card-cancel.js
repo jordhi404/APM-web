@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.Echo.channel('card.payment.cancel').listen('.card.cancel', (e) => {
-        window.location.href = "/payment-canceled"; // local side
-        // window.location.href = "/apm/payment-canceled"; // server side
+        // window.location.href = "/payment-canceled"; // local side
+        window.location.href = "/apm/payment-canceled"; // server side
 
         // const payload = e.data;
 
