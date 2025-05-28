@@ -97,8 +97,8 @@
     <!-- Ads -->
     <div id="ads-container">
         <div class="slider">
-            <img src="images/Promo-depan-1.png" class="ads active" />
-            <img src="images/Promo-depan-2.png" class="ads" />
+            <img src="images/Promo-depan-1.jpeg" class="ads active" />
+            <img src="images/Promo-depan-2.jpeg" class="ads" />
         </div>
     </div>
 @endsection
