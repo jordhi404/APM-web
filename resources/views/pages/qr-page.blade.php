@@ -2,6 +2,15 @@
 
 @section ('title', 'QR Code Page')
 
+@push('styles')
+    <style>
+        #total_tagihan {
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
+@endpush
+
 @section ('content')
     <div class="payment-container mt-4 flex-column" id="content-main">
         <div class="row mb-3">

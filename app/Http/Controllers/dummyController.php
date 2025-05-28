@@ -192,7 +192,7 @@ class dummyController extends Controller
 
         // Log::info('Request data: ', $data);
         $KRISCardSignature = $request->header('X-Signature'); // dari SI-KRIS
-        $card_secret = env('SIKRIS_CARD_SECRET');
+        $card_secret = env('SI_KRIS_SECRET');
 
         // Hitung signature sendiri
         $expectedCardSignature = hash_hmac('sha256', json_encode($data), $card_secret);

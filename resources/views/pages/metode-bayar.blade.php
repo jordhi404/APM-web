@@ -23,7 +23,7 @@
 
         .option-card.selected {
             border-color: #007bff;
-            background: url('images/background_kosala.png');
+            background: url('images/background_kosala.jpeg');
             background-size: cover;
         }
 
