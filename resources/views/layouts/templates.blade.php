@@ -34,7 +34,7 @@
                         <img src="images/promo-2.jpg" class="d-block w-100" alt="item2">
                     </div>
                     <div class="carousel-item" data-bs-interval="7000">
-                        <img src="images/promo-3.png" class="d-block w-100" alt="item3">
+                        <img src="images/promo-3.jpeg" class="d-block w-100" alt="item3">
                     </div>
                 </div>
             </div>
