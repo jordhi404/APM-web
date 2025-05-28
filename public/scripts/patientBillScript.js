@@ -78,7 +78,7 @@ $(document).ready(function() {
                     registrationNo: registrationNo
                 },
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // kalau perlu CSRF
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
                     let accordion = $('#accordionTagihan');
@@ -218,8 +218,8 @@ $(document).ready(function() {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             sessionStorage.clear(); // Hapus semua data di sessionStorage
-                            // window.location.href = '/apm/public/'; // Arahkan user kembali ke home
-                            window.location.href = '/'; // Arahkan user kembali ke home
+                            window.location.href = '/apm/'; // server
+                            // window.location.href = '/'; // local
                         }
                     });
                 }
@@ -230,8 +230,8 @@ $(document).ready(function() {
                 title: 'Nomor RM tidak ditemukan!',
                 text: 'Silakan kembali dan masukkan ulang No. RM.',
             }).then(() => {
-                // window.location.href = '/apm/public/index'; // Arahkan user kembali ke home
-                window.location.href = '/index'; // Arahkan user kembali ke home
+                window.location.href = '/apm/public/index'; // server
+                // window.location.href = '/index'; // local
             });
         }
     }

@@ -52,8 +52,8 @@
                 confirmButtonText: 'Ya',
             }).then((result) => {
                 if(result.isConfirmed) {
-                    window.location.href = '/payment-canceled';
-                    // window.location.href = '/apm/payment-canceled';
+                    // window.location.href = '/payment-canceled';
+                    window.location.href = '/apm/payment-canceled';
                 }
             });
         });
