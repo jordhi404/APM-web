@@ -39,7 +39,7 @@
 
             Swal.fire({
                 title: 'Lanjutkan Pembayaran?',
-                text: "Harap pastikan total tagihan anda sudah benar.",
+                text: "Harap pastikan rincian tagihan anda sudah benar.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, lanjutkan',

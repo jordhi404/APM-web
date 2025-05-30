@@ -23,4 +23,9 @@ class PatientChargesHd extends Model
     {
         return $this->hasMany(PatientChargesDt::class, 'TransactionID', 'TransactionID');
     }
+
+    public function healthcareServiceUnit()
+    {
+        return $this->belongsTo(HealthcareServiceUnit::class, 'HealthcareServiceUnitID', 'HealthcareServiceUnitID');
+    }
 }

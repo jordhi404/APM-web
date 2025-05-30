@@ -5,7 +5,7 @@
 @push('styles')
     <style>
         #swipe-card {
-            width: 300px; /* Atur lebar gambar sesuai kebutuhan */
+            width: 200px; /* Atur lebar gambar sesuai kebutuhan */
             height: auto; /* Biarkan tinggi otomatis untuk menjaga proporsi */
         }
 
@@ -24,10 +24,6 @@
         <img src="images/swipe-card.png" alt="swipe-card" id="swipe-card" class="img-fluid mb-1">
         <div class="text-center" id="total_tagihan"></div>
     </div>
-
-    <!-- <div>
-        <a href="{{ url('/payment-success') }}" class="btn btn-primary">Button</a>
-    </div> -->
 @endsection
 
 @push ('scripts')

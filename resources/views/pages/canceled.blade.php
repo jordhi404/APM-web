@@ -31,6 +31,6 @@
     </div>
 
     <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
-        <button class="btn btn-primary" id="back-btn">Tidak, kembali ke beranda</button>
+        <button class="btn btn-primary" id="back-btn">Kembali ke beranda</button>
     </div>
 @endsection

@@ -18,7 +18,7 @@ $(document).ready(function() {
             let billList = `${billing_no}-${paymentAmount}`;
             $.ajax({
                 type: 'POST',
-                url: 'http://192.167.4.250/si_kris/public/api/medinfras/outpatient/pay-bill',
+                url: 'http://192.167.4.250/si_kris/public/api/medinfras/pay-bill',
                 data: JSON.stringify({
                     registrationNo: registrationNo,
                     billList: billList,
