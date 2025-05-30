@@ -195,8 +195,8 @@ $(document).ready(function() {
             } else {
                 $.ajax({
                     type: 'POST',
-                    // url: `http://192.167.4.250/apm/public/api/patients-bill`,
-                    url: `http://10.100.18.154:8000/api/patients-bill`,
+                    url: `http://192.167.4.250/apm/public/api/patients-bill`,
+                    // url: `http://10.100.18.154:8000/api/patients-bill`,
                     data: {
                         RM: RM,
                         existedBillNo: existedBillNo
@@ -308,8 +308,8 @@ $(document).ready(function() {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 sessionStorage.clear(); // Hapus semua data di sessionStorage
-                                // window.location.href = '/apm/public/'; // Arahkan user kembali ke home
-                                window.location.href = '/'; // Arahkan user kembali ke home
+                                window.location.href = '/apm/public/'; // Arahkan user kembali ke home
+                                // window.location.href = '/'; // Arahkan user kembali ke home
                             }
                         });
                     }
@@ -321,8 +321,8 @@ $(document).ready(function() {
                 title: 'Ada kendala dalam menampilkan rincian tagihan!',
                 // text: 'Silakan kembali dan masukkan ulang No. RM.',
             }).then(() => {
-                // window.location.href = '/apm/public/index'; // Arahkan user kembali ke home
-                window.location.href = '/index'; // Arahkan user kembali ke home
+                window.location.href = '/apm/public/index'; // server
+                // window.location.href = '/index'; // local
             });
         }
     }

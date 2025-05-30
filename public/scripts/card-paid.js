@@ -17,8 +17,8 @@ $(document).ready(function() {
             ];
             $.ajax({
                 type: 'POST',
-                // url: 'http://192.167.4.250/si_kris/api/apm/ecrlink/sale',
-                url: 'http://127.0.0.1:8000/api/apm/ecrlink/sale',
+                url: 'http://192.167.4.250/si_kris/api/apm/ecrlink/sale',
+                // url: 'http://127.0.0.1:8000/api/apm/ecrlink/sale',
                 data: JSON.stringify ({
                     medical_record_no: medical_record_no,
                     registration_no: reg_no,
