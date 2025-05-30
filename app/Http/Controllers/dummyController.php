@@ -131,7 +131,7 @@ class dummyController extends Controller
             });
 
         return response()->json([
-            'satus' => 'success',
+            'status' => 'success',
             'message' => 'Data tagihan berhasil diambil',
             'data' => $charges,
         ], 200);
