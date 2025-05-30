@@ -71,7 +71,8 @@ $(document).ready(function() {
 
             $.ajax({
                 type: 'POST',
-                url: `http://192.167.4.250/apm/public/api/patients-info`,
+                // url: `http://192.167.4.250/apm/public/api/patients-info`, // Server
+                url: `http://10.100.18.154:8000/api/patients-info`, // Local
                 data: {
                     RM: RM,
                     dob: dob
@@ -80,6 +81,11 @@ $(document).ready(function() {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    console.log('bill_no: ', response.bill_no);
+                    let billNote = response.bill_no 
+                        ? '<div class="alert alert-success mt-2 text-center">Pasien sudah dibuat nomor tagihan.</div>' 
+                        : '<div class="alert alert-warning mt-2 text-center">Pasien belum dibuat nomor tagihan.</div>';
+
                     Swal.fire ({
                         icon: 'success',
                         title: 'Pasien ditemukan!',
@@ -102,6 +108,11 @@ $(document).ready(function() {
                                             <p><strong>${response.reg_no}</strong></p>
                                         </div>
                                     </div>
+                                    <div class="row d-flex">
+                                        <div class="col">
+                                            <p><strong>${billNote}</strong></p>
+                                        </div>
+                                    </div>
                                 </div>        
                             `, // Pasien dummy dari pgsql: response.name || Pasien dari medin dan medin_ws: response.FullName
                         confirmButtonText: "Lanjut Pembayaran",
@@ -110,7 +121,7 @@ $(document).ready(function() {
                             sessionStorage.setItem('RM', RM);
                             sessionStorage.setItem('dob', dob);
                             sessionStorage.setItem('registrationNo', response.reg_no);
-                            // sessionStorage.setItem('reg_no', response.RegistrationNo);
+                            sessionStorage.setItem('DB_bill_no', response.bill_no);
                             // window.location.href= `/apm/details`;
                             window.location.href= `/details`;
                         }

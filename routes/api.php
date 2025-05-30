@@ -15,6 +15,6 @@ Route::post('/payment/bank/kris-card-callback', [dummyController::class, 'cardPa
 
 Route::post('/patients-info', [dummyController::class, 'getPatientInfo'])->name('patientInfo');
 
-Route::post('/patients-bill', [dummyController::class, 'getPatientInfo'])->name('patientBill');
+Route::post('/patients-bill', [dummyController::class, 'getPatientBill'])->name('patientBill');
 
 Route::post('/print-bill', [printNotaController::class, 'printPaymentBill'])->name('print-bill');
