@@ -11,6 +11,7 @@ use App\Models\dummy_data;
 use App\Models\list_harga;
 use App\Models\TagihanDummy;
 use App\Models\patient;
+use App\Models\PatientChargesHd;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Log;
 
@@ -77,16 +78,63 @@ class dummyController extends Controller
                                     ->whereNotIn('GCRegistrationStatus', ['X020^006', 'X020^007'])
                                     ->where('GCCustomerType', 'X004^999')                                  
                                     ->orderByDesc('RegistrationDate')
+                                    ->with(['patientBills' => function ($query) {
+                                                $query->whereNull('PaymentID')
+                                                    ->orderByDesc('BillingDate')
+                                                    ->limit(1);
+                                        }])
                                     ->first();
 
             $RegistrationNo = $latest_registration->RegistrationNo ?? null;
+            $firstBill = $latest_registration->patientBills->first();
+            $patientBillingNo = $firstBill?->PatientBillingNo;
+
 
             return response()->json([
                 'status' => 'success',
                 'data' => $data_pasien, 
-                'reg_no' => $RegistrationNo
+                'reg_no' => $RegistrationNo,
+                'bill_no' => $patientBillingNo,
             ]);
         }
+    }
+
+    public function getPatientBill(Request $request)
+    {
+        $existedBillNo = $request->input('existedBillNo');
+
+        $charges = PatientChargesHd::with([
+            'healthcareServiceUnit.serviceUnit', // akses ServiceUnitMaster lewat HealthcareServiceUnit
+            'patientBill.registration'        // akses Registration lewat PatientBilling
+        ])
+            ->whereHas('patientBill', function ($query) use ($existedBillNo) {
+                $query->where('PatientBillingNo', $existedBillNo);
+        })
+            ->orderByDesc('TransactionDate')
+            ->get()
+            ->map(function ($pch) {
+                return [
+                    'RegistrationNo'       => $pch->patientBill->registration->RegistrationNo ?? null,
+                    'PatientBillingNo'     => $pch->patientBill->PatientBillingNo ?? null,
+                    'TransactionNo'        => $pch->TransactionNo,
+                    'TransactionDate'      => $pch->TransactionDate,
+                    'TransactionTime'      => $pch->TransactionTime,
+                    'ServiceUnitCode'      => $pch->healthcareServiceUnit->serviceUnit->ServiceUnitCode ?? null,
+                    'ServiceUnitName'      => $pch->healthcareServiceUnit->serviceUnit->ServiceUnitName ?? null,
+                    'TotalPatientAmount'   => (fmod($pch->TotalPatientAmount, 1) == 0.0) 
+                                                ? intval($pch->TotalPatientAmount) 
+                                                : floatval($pch->TotalPatientAmount),
+                    'TotalPayerAmount'     => (fmod($pch->TotalPayerAmount, 1) == 0.0) 
+                                                ? intval($pch->TotalPayerAmount) 
+                                                : floatval($pch->TotalPayerAmount),
+                ];
+            });
+
+        return response()->json([
+            'satus' => 'success',
+            'message' => 'Data tagihan berhasil diambil',
+            'data' => $charges,
+        ], 200);
     }
 
     /* QR Page */
@@ -140,7 +188,7 @@ class dummyController extends Controller
         return view('pages.canceled');
     }
 
-    /* Handling callback response pembayaran */ 
+    /* HANDLE CALLBACK PEMBAYARAN VIA QRIS */ 
     public function handleCallback(Request $request) {
         Log::info('Received callback from SI-KRIS');
 
@@ -191,6 +239,7 @@ class dummyController extends Controller
         ], 200);
     }
 
+    /* HANDLE CALLBACK PEMBAYARAN VIA KARTU DEBIT (EDC) */
     public function cardPaymentCallback(Request $request) {
         Log::info('Received card payment callback from SI-KRIS');
 
@@ -215,9 +264,9 @@ class dummyController extends Controller
 
         $CardRes = $data;
 
-        $responseStatus = $CardRes['status'];
-        $responseReferenceNo = $CardRes['reference_no'];
-        $responseMessage = $CardRes['msg'];
+        $responseStatus = $CardRes['status'] ?? null;
+        $responseReferenceNo = $CardRes['reference_no'] ?? null;
+        $responseMessage = $CardRes['msg'] ?? null;
 
         if ($responseStatus == 'failed') {
             if ($responseReferenceNo == 'N/A') {
@@ -226,23 +275,39 @@ class dummyController extends Controller
 
                 return response()->json([
                     'status' => 'error',
+                    'response_status' => $responseStatus,
+                    'reference_no' => $responseReferenceNo,
                     'message' => $responseMessage . ', Transaksi dibatalkan.',
                 ], 403);
             } else {
                 return response()->json([
                     'status' => 'error',
+                    'response_status' => $responseStatus,
+                    'reference_no' => $responseReferenceNo,
                     'message' => $responseMessage . ', PIN yang dimasukkan salah.',
                 ], 403);
             }
-        } else {
-            $responseTrxId = $CardRes['transaction_id'];
+        } elseif ($responseStatus == 'success') {
+            $responseTrxId = $CardRes['transaction_id'] ?? null;
     
             if ($responseTrxId) {
                 Log::info("Payment success!");
                 Log::info('CardRes: ', $CardRes);
                 Log::info('Transaction ID: ' . $responseTrxId);
                 event(new cardPayment($responseTrxId, $CardRes));
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'TrxiD yang diterima: ' . $responseTrxId,
+                    'data' => $CardRes,
+                ], 403);
             }
+        } else {
+            return response()->json([
+                'status' => $responseStatus,
+                'message' => 'Kejadian tidak terduga',
+                'data' => $CardRes,
+            ], 403);
         }
 
         return response()->json([
