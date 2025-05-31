@@ -11,7 +11,7 @@ use App\Models\dummy_data;
 use App\Models\list_harga;
 use App\Models\TagihanDummy;
 use App\Models\patient;
-use App\Models\PatientChargesHd;
+use App\Models\patientChargesHd;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Log;
 
@@ -103,7 +103,7 @@ class dummyController extends Controller
     {
         $existedBillNo = $request->input('existedBillNo');
 
-        $charges = PatientChargesHd::with([
+        $charges = patientChargesHd::with([
             'healthcareServiceUnit.serviceUnit', // akses ServiceUnitMaster lewat HealthcareServiceUnit
             'patientBill.registration'        // akses Registration lewat PatientBilling
         ])

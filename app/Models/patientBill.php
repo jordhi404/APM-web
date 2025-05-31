@@ -21,6 +21,6 @@ class PatientBill extends Model
 
     public function chargesHd()
     {
-        return $this->hasMany(PatientChargesHd::class, 'PatientBillingID', 'PatientBillingID');
+        return $this->hasMany(patientChargesHd::class, 'PatientBillingID', 'PatientBillingID');
     }
 }

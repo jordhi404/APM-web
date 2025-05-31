@@ -21,6 +21,6 @@ class HealthcareServiceUnit extends Model
 
     public function chargesHd()
     {
-        return $this->hasMany(PatientChargesHd::class, 'HealthcareServiceUnitID', 'HealthcareServiceUnitID');
+        return $this->hasMany(patientChargesHd::class, 'HealthcareServiceUnitID', 'HealthcareServiceUnitID');
     }
 }
