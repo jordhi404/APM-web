@@ -71,8 +71,8 @@ $(document).ready(function() {
 
             $.ajax({
                 type: 'POST',
-                // url: `http://192.167.4.250/apm/public/api/patients-info`, // Server
-                url: `http://10.100.18.154:8000/api/patients-info`, // Local
+                url: `http://192.167.4.250/apm/public/api/patients-info`, // Server
+                // url: `http://10.100.18.154:8000/api/patients-info`, // Local
                 data: {
                     RM: RM,
                     dob: dob
@@ -122,8 +122,8 @@ $(document).ready(function() {
                             sessionStorage.setItem('dob', dob);
                             sessionStorage.setItem('registrationNo', response.reg_no);
                             sessionStorage.setItem('DB_bill_no', response.bill_no);
-                            // window.location.href= `/apm/details`;
-                            window.location.href= `/details`;
+                            window.location.href= `/apm/details`;
+                            // window.location.href= `/details`;
                         }
                     });
                 },
@@ -141,8 +141,8 @@ $(document).ready(function() {
     function kembaliKeAwal() {
         $('#back-btn').click(function() {
             sessionStorage.clear();
-            // window.location.href = '/apm/';
-            window.location.href = '/';
+            window.location.href = '/apm/';
+            // window.location.href = '/';
             console.log('Session cleared!');
         });
     }

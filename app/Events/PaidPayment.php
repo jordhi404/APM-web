@@ -26,7 +26,9 @@ class PaidPayment implements ShouldBroadcast
         $this->responseReffNo = $responseReffNo;
         $this->data = $data;
 
-        Log::info("QR Payment Event called");
+        // Log::info("QR Payment Event called");
+
+        // Log::info("Event called");
     }
 
     /**

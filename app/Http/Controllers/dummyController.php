@@ -11,7 +11,7 @@ use App\Models\dummy_data;
 use App\Models\list_harga;
 use App\Models\TagihanDummy;
 use App\Models\patient;
-use App\Models\PatientChargesHd;
+use App\Models\patientChargesHd;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Log;
 
@@ -103,7 +103,7 @@ class dummyController extends Controller
     {
         $existedBillNo = $request->input('existedBillNo');
 
-        $charges = PatientChargesHd::with([
+        $charges = patientChargesHd::with([
             'healthcareServiceUnit.serviceUnit', // akses ServiceUnitMaster lewat HealthcareServiceUnit
             'patientBill.registration'        // akses Registration lewat PatientBilling
         ])
@@ -131,7 +131,7 @@ class dummyController extends Controller
             });
 
         return response()->json([
-            'satus' => 'success',
+            'status' => 'success',
             'message' => 'Data tagihan berhasil diambil',
             'data' => $charges,
         ], 200);
@@ -190,11 +190,11 @@ class dummyController extends Controller
 
     /* HANDLE CALLBACK PEMBAYARAN VIA QRIS */ 
     public function handleCallback(Request $request) {
-        Log::info('Received callback from SI-KRIS');
+        // Log::info('Received callback from SI-KRIS');
 
         $data = $request->all();
 
-        Log::info('Request data: ', $data);
+        // Log::info('Request data: ', $data);
         $theirSignature = $request->header('X-Signature'); // dari SI-KRIS
         $secret = env('SI_KRIS_SECRET');
 
@@ -202,7 +202,7 @@ class dummyController extends Controller
         $expectedSignature = hash_hmac('sha256', json_encode($data), $secret);
 
         if (!hash_equals($expectedSignature, $theirSignature)) {
-            Log::warning('Invalid signature.');
+            // Log::warning('Invalid signature.');
             return response()->json([
                 'status' => 'unauthorized',
                 'message' => 'Invalid signature',
@@ -224,9 +224,9 @@ class dummyController extends Controller
             $responseReffNo = $payload['reference_no'] ?? null;
     
             if ($responseReffNo) {
-                Log::info("Payment success!");
-                Log::info('Payload: ', $payload);
-                Log::info('Reference No: ' . $responseReffNo);
+                // Log::info("Payment success!");
+                // Log::info('Payload: ', $payload);
+                // Log::info('Reference No: ' . $responseReffNo);
                 event(new PaidPayment($responseReffNo, $payload));
             }
         }
@@ -241,11 +241,11 @@ class dummyController extends Controller
 
     /* HANDLE CALLBACK PEMBAYARAN VIA KARTU DEBIT (EDC) */
     public function cardPaymentCallback(Request $request) {
-        Log::info('Received card payment callback from SI-KRIS');
+        // Log::info('Received card payment callback from SI-KRIS');
 
         $data = $request->all();
 
-        Log::info('Request data: ', $data);
+        // Log::info('Request data: ', $data);
         $KRISCardSignature = $request->header('X-Signature'); // dari SI-KRIS
         $card_secret = env('SI_KRIS_SECRET');
 
@@ -253,7 +253,7 @@ class dummyController extends Controller
         $expectedCardSignature = hash_hmac('sha256', json_encode($data), $card_secret);
 
         if (!hash_equals($expectedCardSignature, $KRISCardSignature)) {
-            Log::warning('Invalid signature.');
+            // Log::warning('Invalid signature.');
             return response()->json([
                 'status' => 'unauthorized',
                 'message' => 'Invalid signature',
@@ -291,9 +291,9 @@ class dummyController extends Controller
             $responseTrxId = $CardRes['transaction_id'] ?? null;
     
             if ($responseTrxId) {
-                Log::info("Payment success!");
-                Log::info('CardRes: ', $CardRes);
-                Log::info('Transaction ID: ' . $responseTrxId);
+                // Log::info("Payment success!");
+                // Log::info('CardRes: ', $CardRes);
+                // Log::info('Transaction ID: ' . $responseTrxId);
                 event(new cardPayment($responseTrxId, $CardRes));
             } else {
                 return response()->json([

@@ -16,7 +16,7 @@ class PatientChargesDt extends Model
 
     public function chargesHd()
     {
-        return $this->belongsTo(PatientChargesHd::class, 'TransactionID', 'TransactionID');
+        return $this->belongsTo(patientChargesHd::class, 'TransactionID', 'TransactionID');
     }
 
     public function item()
