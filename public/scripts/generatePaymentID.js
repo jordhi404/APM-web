@@ -3,11 +3,11 @@ $(document).ready(function() {
         console.log('generatePaymentID function called!');
         let registrationNo = sessionStorage.getItem('registrationNo');
         let billing_no = sessionStorage.getItem('billing_no');
-        let shift = "001" // Pagi. --> STATIS
-        let cashierGroup = "012"; // Kasir RAJAL. --> STATIS
-        let paymentMethod = "021"; // QRIS BRI. --> DINAMIS
+        let shift = "001" // Pagi.
+        let cashierGroup = "012"; // Kasir RAJAL.
+        let paymentMethod = "021"; // QRIS BRI.
         let paymentAmount = sessionStorage.getItem('total_amount');
-        let bankCode = "003"; // CIMB NIAGA 9000 (RS), BCA 7256 (YYS).
+        let bankCode = "007"; // CIMB NIAGA 9000 (RS), BCA 7256 (YYS).
         let remarks = sessionStorage.getItem('remarks'); // Keterangan dari API.
         let referenceNo = sessionStorage.getItem('referenceNo'); // Nomor referensi dari API.
         let cardType = "001";
@@ -18,7 +18,7 @@ $(document).ready(function() {
             let billList = `${billing_no}-${paymentAmount}`;
             $.ajax({
                 type: 'POST',
-                url: 'http://192.167.4.250/si_kris/public/api/medinfras/pay-bill',
+                url: 'http://192.167.4.250/si_kris/public/api/apm/medinfras/pay-bill',
                 data: JSON.stringify({
                     registrationNo: registrationNo,
                     billList: billList,
