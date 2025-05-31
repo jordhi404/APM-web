@@ -53,7 +53,7 @@
             z-index: 1;
         }
 
-        #btn-front-page {
+        .btn-front-page {
             height: 20vh;
             width: 35vw;
         }
@@ -72,14 +72,14 @@
             <h4>SILAHKAN PILIH MENU DI BAWAH INI</h4>
         </div>
         <div class="d-flex gap-5 d-md-flex justify-content-md-end">
-            <a href="" class="btn" id="btn-front-page">
+            <a href="" class="btn btn-front-page" id="lihat_layanan">
                 <!-- <div class="mt-5">
                     <i class="fa-solid fa-magnifying-glass"></i><br>
                     LIHAT LAYANAN
                 </div> -->
                 <img src="images/Lihat promo.png" alt="lihat-promo" id="front-btn-img">
             </a>
-            <a href="{{ url('/index') }}" class="btn" id="btn-front-page">
+            <a href="{{ url('/index') }}" class="btn btn-front-page" id="bayar_tagihan">
                 <!-- <div class="mt-5">
                     <i class="fa-regular fa-money-bill-1"></i><br>
                     BAYAR TAGIHAN
@@ -191,4 +191,15 @@
             });
         </script>
     @endif
+    <script>
+        $('#lihat_layanan').click(function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Fitur ini belum tersedia',
+                text: 'Fitur ini akan tersedia di masa mendatang 🙇.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
 @endpush
