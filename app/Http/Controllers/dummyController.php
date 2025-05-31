@@ -213,7 +213,7 @@ class dummyController extends Controller
 
         $payload = $data;
 
-        $responseMessage = $payload['transactionStatusDesc'] ?? null;
+        $responseMessage = $payload['status'] ?? null;
 
         if ($responseMessage !== 'success') {
             return response()->json([
@@ -221,7 +221,7 @@ class dummyController extends Controller
                 'message' => 'Response yang didapat: ' . $responseMessage,
             ], 403);
         } else {
-            $responseReffNo = $payload['referenceNo'] ?? null;
+            $responseReffNo = $payload['reference_no'] ?? null;
     
             if ($responseReffNo) {
                 Log::info("Payment success!");
