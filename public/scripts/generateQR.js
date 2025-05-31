@@ -17,7 +17,7 @@ $(document).ready(function() {
             $.ajax({
                 type: 'POST',
                 // url: 'http://192.167.4.250/si_kris/public/api/apm/qris/generate-qr',
-                url: 'https://devkris.droensolobaru.com/apm/qris/generate-qr',
+                url: 'https://devkris.droensolobaru.com/api/snap/qris/generate-qr',
                 data: JSON.stringify ({
                     medical_record_no: medical_record_no,
                     registration_no: reg_no,

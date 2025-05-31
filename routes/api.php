@@ -18,3 +18,5 @@ Route::post('/patients-info', [dummyController::class, 'getPatientInfo'])->name(
 Route::post('/patients-bill', [dummyController::class, 'getPatientBill'])->name('patientBill');
 
 Route::post('/print-bill', [printNotaController::class, 'printPaymentBill'])->name('print-bill');
+
+// Route::post('/qris-test', [dummyController::class, 'generateQrisTest'])->name('qris-test');
