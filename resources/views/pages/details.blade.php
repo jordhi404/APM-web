@@ -23,7 +23,7 @@
             <div class="col-6 text-end">
                 <div>
                     <a class="btn btn-primary" id="btnBayar" href="{{ route('metode-bayar', ['RegistrationNo' => session('registration_no')]) }}">Bayar</a>
-                    <button class="btn btn-danger" id="back-btn">Batal</button>
+                    <button class="btn btn-danger ms-3" id="back-btn">Batal</button>
                 </div>
             </div>
         </div>
