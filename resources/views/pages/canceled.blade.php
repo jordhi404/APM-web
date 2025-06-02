@@ -14,8 +14,8 @@
         }
 
         #payment-check {
-            width: 27vw;
-            height: 30vh;
+            width: 33vw;
+            height: 20vh;
         }
     </style>
 @endpush
@@ -23,7 +23,7 @@
 @section ('content')
     <div class="container" id="content-main">
         <div class="row d-flex d-column justify-content-center">
-            <img src="images/cancel.png" alt="canceled" id="payment-check">
+            <img src="images/receipt.png" alt="canceled" id="payment-check">
             <div class="col-md-12 mt-3">
                 <h1 class="text-center">Transaksi Dibatalkan</h1>
             </div>
