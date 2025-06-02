@@ -73,7 +73,7 @@ $(document).ready(function() {
             if (existedBillNo === null || existedBillNo === 'null') {
                 $.ajax({
                     type: 'POST',
-                    url: `http://192.167.4.250/si_kris/public/api/apm/medinfras/list-patient-transaction`,
+                    url: `http://192.167.4.250/apm-backend/api/apm/medinfras/list-patient-transaction`,
                     data: {
                         RM: RM,
                         dob: dob,

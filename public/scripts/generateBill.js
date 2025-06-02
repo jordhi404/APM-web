@@ -28,7 +28,7 @@ $(document).ready(function() {
 
                 $.ajax({
                     type: 'POST',
-                    url: 'http://192.167.4.250/si_kris/public/api/apm/medinfras/generate-payment-bill',
+                    url: 'http://192.167.4.250/apm-backend/api/apm/medinfras/generate-payment-bill',
                     data: JSON.stringify(payload),
                     contentType: 'application/json',
                     headers: {
